@@ -1,0 +1,109 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="arashincleric.com.spinner.TaskFragment"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:id="@+id/linearLayout">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:id="@+id/leftView">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="400dp"
+                    android:layout_height="400dp"
+                    android:id="@+id/leftWheel"
+                    android:scaleType="matrix"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true" />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/leftCheckBox"
+                    android:layout_below="@+id/leftWheel"
+                    android:layout_centerHorizontal="true"
+                    android:padding="16dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/leftScore"
+                    android:layout_below="@+id/leftWheel"
+                    android:layout_toRightOf="@+id/leftCheckBox"
+                    android:layout_toEndOf="@+id/leftCheckBox" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pointerLeft"
+                    android:src="@drawable/pointer"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:id="@+id/rightView">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="400dp"
+                    android:layout_height="400dp"
+                    android:id="@+id/rightWheel"
+                    android:scaleType="matrix"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true" />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rightCheckBox"
+                    android:layout_below="@+id/rightWheel"
+                    android:layout_centerHorizontal="true"
+                    android:padding="16dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/rightScore"
+                    android:layout_below="@+id/rightWheel"
+                    android:layout_toRightOf="@+id/rightCheckBox"
+                    android:layout_toEndOf="@+id/rightCheckBox" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView"
+                    android:src="@drawable/pointer"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/confirmBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm"
+        android:layout_gravity="center"/>
+
+
+</LinearLayout>

@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Spinner</string>
+
+    <string name="login">Login</string>
+    <string name="confirm">Choose wheel</string>
+    <string name="title_activity_task">TaskActivity</string>
+    <string name="submit_btn">Submit</string>
+    <string name="email_entry">E-mail_address: </string>
+    <string name="email_entry_confirm">Confirm E-mail_address: </string>
+    <string name="email_entry_hint">jdoe@gmail.com</string>
+    <string name="login_note">Please enter the e-mail address you used to register.
+        Remember this is the e-mail address that will be used to pay you</string>
+    <string name="email_error_match">E-mails do not match</string>
+    <string name="email_error_empty">Please fill out all fields</string>
+    <string name="email_error_invalid">Please enter valid email address</string>
+    <string name="email_error_redundant">You can only complete one session per email address.</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="no_checks">Please select a wheel</string>
+    <string name="confirm_wheel_msg">Are you sure?</string>
+    <string name="yes_confirm">Yes</string>
+    <string name="left_score">Score is: %1$s</string>
+    <string name="right_score">Score is: %1$s</string>
+</resources>
