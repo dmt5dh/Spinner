@@ -13,13 +13,16 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity {
 
@@ -39,6 +42,16 @@ public class MainActivity extends FragmentActivity {
 
         emailEntry = (EditText) findViewById(R.id.emailEntryInput);
         emailEntryConfirm = (EditText) findViewById(R.id.emailEntryInputConfirm);
+        emailEntryConfirm.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                int result = actionId & EditorInfo.IME_MASK_ACTION;
+                if(result == EditorInfo.IME_ACTION_DONE || result == EditorInfo.IME_ACTION_NEXT){
+                    turnFullScreen();
+                }
+                return false;
+            }
+        });
 
         submitBtn = (Button) findViewById(R.id.submit_btn);
         submitBtn.setOnClickListener(new View.OnClickListener() { //Attach even to button

@@ -1,16 +1,12 @@
 package arashincleric.com.spinner;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -26,9 +22,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -150,6 +143,8 @@ public class TaskFragment extends Fragment {
         allowRotatingRight = true;
 
         leftWheel = (ImageView) view.findViewById(R.id.leftWheel);
+        ViewGroup.LayoutParams leftWheelParams = leftWheel.getLayoutParams();
+        leftWheelParams.width = leftWheelParams.height;
         leftWheel.setOnTouchListener(new MyOnTouchListener(true));
         leftWheel.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
@@ -177,6 +172,8 @@ public class TaskFragment extends Fragment {
         });
 
         rightWheel = (ImageView) view.findViewById(R.id.rightWheel);
+        ViewGroup.LayoutParams rightWheelParams = rightWheel.getLayoutParams();
+        rightWheelParams.width = rightWheelParams.height;
 //        rightWheel.setColorFilter(Color.argb(255, 51, 51, 51), PorterDuff.Mode.SRC_OVER); //TODO:TWEAK THIS TO DIM(Multiply)
         rightWheel.setOnTouchListener(new MyOnTouchListener(false));
         rightWheel.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

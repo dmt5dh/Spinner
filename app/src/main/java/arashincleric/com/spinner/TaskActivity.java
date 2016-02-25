@@ -1,5 +1,6 @@
 package arashincleric.com.spinner;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +22,11 @@ import java.util.Random;
 
 public class TaskActivity extends FragmentActivity implements TaskFragment.OnTaskFragmentInteractionListener{
 
+    /** PARAMETERS TO CHANGE**/
+    boolean randomizeList = true;
+
+    /**PARAMETERS TO CHANGE**/
+
     private FragmentManager fragmentManager;
     private Fragment mContent;
     private ArrayList<Wheel> wheelList;
@@ -41,9 +47,10 @@ public class TaskActivity extends FragmentActivity implements TaskFragment.OnTas
         curWheelIndex = 0;
 
         selected = new HashMap<>();
-
-        long seed = System.nanoTime();
-        Collections.shuffle(wheelList, new Random(seed));
+        if(randomizeList){
+            long seed = System.nanoTime();
+            Collections.shuffle(wheelList, new Random(seed));
+        }
 
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -87,7 +94,10 @@ public class TaskActivity extends FragmentActivity implements TaskFragment.OnTas
             turnFullScreen();
         }
         else{
-            finish(); //TODO:go to something here
+            Intent intent = new Intent(TaskActivity.this, ListActivity.class);
+            intent.putParcelableArrayListExtra("WHEELLIST", wheelList);
+            //TODO: easier to use a boolean array than hashmap?
+            startActivity(intent);
         }
     }
 
