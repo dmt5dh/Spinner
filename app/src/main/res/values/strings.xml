@@ -5,9 +5,13 @@
     <string name="confirm">Choose wheel</string>
     <string name="title_activity_task">TaskActivity</string>
     <string name="submit_btn">Submit</string>
-    <string name="email_entry">E-mail_address: </string>
-    <string name="email_entry_confirm">Confirm E-mail_address: </string>
-    <string name="email_entry_hint">jdoe@gmail.com</string>
+    <string name="login_name">Name: </string>
+    <string name="login_id">ID: </string>
+    <string name="login_admin">Admin: </string>
+    <string name="login_location">Location: </string>
+    <string name="login_name_hint">John Doe</string>
+    <string name="login_id_hint">JD123</string>
+    <string name="login_location_hint">George Mason University</string>
     <string name="login_note">Please enter the e-mail address you used to register.
         Remember this is the e-mail address that will be used to pay you</string>
     <string name="email_error_match">E-mails do not match</string>

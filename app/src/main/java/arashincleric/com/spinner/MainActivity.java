@@ -28,8 +28,10 @@ public class MainActivity extends FragmentActivity {
 
     private String userEmail;
 
-    private EditText emailEntry;
-    private EditText emailEntryConfirm;
+    private EditText nameEntry;
+    private EditText idEntry;
+    private EditText adminEntry;
+    private EditText locationEntry;
     private Button submitBtn;
     UsernameDbHelper mDbHelper;
 
@@ -40,9 +42,11 @@ public class MainActivity extends FragmentActivity {
 
         mDbHelper = new UsernameDbHelper(this);
 
-        emailEntry = (EditText) findViewById(R.id.emailEntryInput);
-        emailEntryConfirm = (EditText) findViewById(R.id.emailEntryInputConfirm);
-        emailEntryConfirm.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        nameEntry = (EditText) findViewById(R.id.nameEntryInput);
+        idEntry = (EditText) findViewById(R.id.idEntryInput);
+        adminEntry = (EditText) findViewById(R.id.adminEntryInput);
+        locationEntry = (EditText) findViewById(R.id.locationEntryInput);
+        locationEntry.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 int result = actionId & EditorInfo.IME_MASK_ACTION;
@@ -57,10 +61,11 @@ public class MainActivity extends FragmentActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() { //Attach even to button
             @Override
             public void onClick(View v) {
-                int emailMatch = confirmEmail();
+                //TODO: do confirmation here later
+                int emailMatch = 0;
                 if(emailMatch == 0){
                     Intent intent = new Intent(MainActivity.this, TaskActivity.class);
-                    intent.putExtra("USERNAME", emailEntry.getText().toString());
+                    intent.putExtra("USERNAME", idEntry.getText().toString());
                     startActivity(intent);
                     finish();
                 }
@@ -93,34 +98,34 @@ public class MainActivity extends FragmentActivity {
         setupUI(findViewById(android.R.id.content));
     }
 
-    /**
-     * Check if the two emails match and that they are not empty
-     * @return 1:empty field(s), 2:not valid email, 3:emails don't match, 0:good
-     */
-    public int confirmEmail(){
-        String email = emailEntry.getText().toString();
-        String emailConfirm = emailEntryConfirm.getText().toString();
-
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-        String query = "SELECT * FROM " + UsernameContract.Usernames.TABLE_NAME + " WHERE " + UsernameContract.Usernames.COLUMN_NAME_ENTRY_ID + " = ?";
-        Cursor c = db.rawQuery(query, new String[]{emailEntry.getText().toString()});
-        int x = c.getCount();
-        if(email.isEmpty() || emailConfirm.isEmpty()){ //If either field empty
-            return 1;
-        }
-        else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches() || !Patterns.EMAIL_ADDRESS.matcher(emailConfirm).matches()){ //If fields arent emails
-            return 2;
-        }
-        else if(!email.equals(emailConfirm)){//If fields don't match
-            return 3;
-        }
-        else if(c.getCount() > 0){ //If user has registered before
-            return 4;
-        }
-        else{
-            return 0;
-        }
-    }
+//    /**
+//     * Check if the two emails match and that they are not empty
+//     * @return 1:empty field(s), 2:not valid email, 3:emails don't match, 0:good
+//     */
+//    public int confirmEmail(){
+//        String email = emailEntry.getText().toString();
+//        String emailConfirm = emailEntryConfirm.getText().toString();
+//
+//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+//        String query = "SELECT * FROM " + UsernameContract.Usernames.TABLE_NAME + " WHERE " + UsernameContract.Usernames.COLUMN_NAME_ENTRY_ID + " = ?";
+//        Cursor c = db.rawQuery(query, new String[]{emailEntry.getText().toString()});
+//        int x = c.getCount();
+//        if(email.isEmpty() || emailConfirm.isEmpty()){ //If either field empty
+//            return 1;
+//        }
+//        else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches() || !Patterns.EMAIL_ADDRESS.matcher(emailConfirm).matches()){ //If fields arent emails
+//            return 2;
+//        }
+//        else if(!email.equals(emailConfirm)){//If fields don't match
+//            return 3;
+//        }
+//        else if(c.getCount() > 0){ //If user has registered before
+//            return 4;
+//        }
+//        else{
+//            return 0;
+//        }
+//    }
 
     /**
      * Put a listener on every view to hide softkeyboard if edittext not chosen

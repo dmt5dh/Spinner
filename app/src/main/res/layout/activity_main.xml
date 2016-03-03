@@ -31,15 +31,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/emailEntryRow"
+        android:id="@+id/nameEntryRow"
         android:layout_below="@+id/noteTextView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
         <TextView android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/email_entry"
-            android:id="@+id/emailEntryText"
+            android:text="@string/login_name"
+            android:id="@+id/nameEntryText"
             android:textSize="25sp">
         </TextView>
 
@@ -49,8 +49,8 @@
             android:inputType="textEmailAddress"
             android:ems="10"
             android:textSize="25sp"
-            android:id="@+id/emailEntryInput"
-            android:hint="@string/email_entry_hint"/>
+            android:id="@+id/nameEntryInput"
+            android:hint="@string/login_name_hint"/>
 
     </LinearLayout>
 
@@ -58,15 +58,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/linearLayout"
-        android:layout_below="@+id/emailEntryRow"
+        android:layout_below="@+id/nameEntryRow"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/idEntryRow">
 
         <TextView android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/email_entry_confirm"
-            android:id="@+id/emailEntryConfirmText"
+            android:text="@string/login_id"
+            android:id="@+id/idEntryText"
             android:textSize="25sp">
         </TextView>
 
@@ -76,11 +76,63 @@
             android:inputType="textEmailAddress"
             android:ems="10"
             android:textSize="25sp"
-            android:id="@+id/emailEntryInputConfirm"
-            android:hint="@string/email_entry_hint"/>
+            android:id="@+id/idEntryInput"
+            android:hint="@string/login_id_hint"/>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/adminEntryRow"
+        android:layout_below="@+id/idEntryRow"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/login_admin"
+            android:id="@+id/adminEntryText"
+            android:textSize="25sp">
+        </TextView>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:textSize="25sp"
+            android:id="@+id/adminEntryInput" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/locationEntryRow"
+        android:layout_below="@+id/adminEntryRow"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/login_location"
+            android:id="@+id/locationEntryText"
+            android:textSize="25sp">
+        </TextView>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:textSize="25sp"
+            android:id="@+id/locationEntryInput"
+            android:hint="@string/login_location_hint"/>
+
+    </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
