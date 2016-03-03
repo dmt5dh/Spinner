@@ -1,10 +1,13 @@
 package arashincleric.com.spinner;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 
@@ -15,10 +18,10 @@ import java.util.ArrayList;
  */
 public class WheelListAdapter  extends BaseAdapter implements ListAdapter{
 
-    private ArrayList<Wheel> list = new ArrayList<Wheel>();
+    private ArrayList<WheelListActivity.WheelTuple> list = new ArrayList<WheelListActivity.WheelTuple>();
     private Context context;
 
-    public WheelListAdapter(Context context, ArrayList<Wheel> list){
+    public WheelListAdapter(Context context, ArrayList<WheelListActivity.WheelTuple> list){
         this.context = context;
         this.list = list;
     }
@@ -40,9 +43,6 @@ public class WheelListAdapter  extends BaseAdapter implements ListAdapter{
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent){
-        if(position % 2 != 0 ){
-            return null;
-        }
         View view = convertView;
         if(view == null){ //If view not inflated, inflate it
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -52,8 +52,24 @@ public class WheelListAdapter  extends BaseAdapter implements ListAdapter{
         ImageView leftWheel = (ImageView)view.findViewById(R.id.leftWheel);
         ImageView rightWheel = (ImageView)view.findViewById(R.id.rightWheel);
 
-        leftWheel.setImageBitmap(list.get(position).getBitmap());
-        rightWheel.setImageBitmap(list.get(position + 1).getBitmap());
+        CheckBox leftCheckBox = (CheckBox)view.findViewById(R.id.leftCheckBox);
+        leftCheckBox.setClickable(false);
+        CheckBox rightCheckBox = (CheckBox)view.findViewById(R.id.rightCheckBox);
+        rightCheckBox.setClickable(false);
+
+        WheelListActivity.WheelTuple wheelTuple = list.get(position);
+
+        leftWheel.setImageBitmap(new WheelView(context, wheelTuple.left).getBitmapReduced());
+        rightWheel.setImageBitmap(new WheelView(context, wheelTuple.right).getBitmapReduced());
+
+        if(!wheelTuple.left.isChosen){
+            leftWheel.setColorFilter(Color.argb(255, 51, 51, 51), PorterDuff.Mode.DARKEN); //TODO:TWEAK THIS TO DIM(Multiply)
+            rightCheckBox.setChecked(true);
+        }
+        else{
+            rightWheel.setColorFilter(Color.argb(255, 51, 51, 51), PorterDuff.Mode.DARKEN); //TODO:TWEAK THIS TO DIM(Multiply)
+            leftCheckBox.setChecked(true);
+        }
 
         return view;
     }

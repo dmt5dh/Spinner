@@ -49,8 +49,8 @@ public class TaskFragment extends Fragment {
 
     private boolean allowRotatingLeft, allowRotatingRight;
 
-    Wheel wLeft;
-    Wheel wRight;
+    WheelView wLeft;
+    WheelView wRight;
 
     CheckBox leftCheckBox;
     CheckBox rightCheckBox;
@@ -81,8 +81,8 @@ public class TaskFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         if (getArguments() != null) {
-            wLeft = mListener.getWheelFromList();
-            wRight = mListener.getWheelFromList();
+            wLeft = new WheelView(getContext(), mListener.getWheelFromList());
+            wRight = new WheelView(getContext(), mListener.getWheelFromList());
         }
 
         //New instance so we want to redraw every time
@@ -238,7 +238,7 @@ public class TaskFragment extends Fragment {
                             .setPositiveButton(R.string.yes_confirm, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    mListener.nextScreen(leftCheckBox.isChecked(), wLeft, wRight);
+                                    mListener.nextScreen(leftCheckBox.isChecked());
                                 }
                             })
                             .setNegativeButton(R.string.cancel_btn, null)
@@ -618,7 +618,7 @@ public class TaskFragment extends Fragment {
     public interface OnTaskFragmentInteractionListener {
         // TODO: Update argument type and name
         public Wheel getWheelFromList();
-        public void nextScreen(boolean isLeftSelected, Wheel wLeft, Wheel wRight);
+        public void nextScreen(boolean isLeftSelected);
     }
 
 }

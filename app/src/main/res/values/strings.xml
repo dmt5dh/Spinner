@@ -20,4 +20,5 @@
     <string name="yes_confirm">Yes</string>
     <string name="left_score">Score is: %1$s</string>
     <string name="right_score">Score is: %1$s</string>
+    <string name="confirm_list_sel">Are you sure you want to use this?</string>
 </resources>

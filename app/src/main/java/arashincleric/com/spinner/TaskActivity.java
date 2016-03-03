@@ -30,7 +30,7 @@ public class TaskActivity extends FragmentActivity implements TaskFragment.OnTas
     private FragmentManager fragmentManager;
     private Fragment mContent;
     private ArrayList<Wheel> wheelList;
-    private HashMap<Wheel, Boolean> selected;
+    private ArrayList<Boolean> selected;
     private int curWheelIndex;
 
     @Override
@@ -39,14 +39,14 @@ public class TaskActivity extends FragmentActivity implements TaskFragment.OnTas
         setContentView(R.layout.activity_task);
 
         wheelList = new ArrayList<Wheel>();
-        wheelList.add(new Wheel(this, new float[]{30,60,270}, new int[]{1, 2, 3}, new int[]{Color.RED, Color.BLUE, Color.GREEN}));
-        wheelList.add(new Wheel(this, new float[]{10,90,260}, new int[]{4, 5, 6}, new int[]{Color.RED, Color.BLUE, Color.GREEN}));
-        wheelList.add(new Wheel(this, new float[]{30,60,90, 90, 90}, new int[]{9, 10, 11, 12,13}, new int[]{Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN}));
-        wheelList.add(new Wheel(this, new float[]{180,180}, new int[]{1, 2}, new int[]{Color.RED, Color.BLUE}));
+        wheelList.add(new Wheel(new float[]{30,60,270}, new int[]{1, 2, 3}, new int[]{Color.RED, Color.BLUE, Color.GREEN}));
+        wheelList.add(new Wheel(new float[]{10,90,260}, new int[]{4, 5, 6}, new int[]{Color.RED, Color.BLUE, Color.GREEN}));
+        wheelList.add(new Wheel(new float[]{30,60,90, 90, 90}, new int[]{9, 10, 11, 12,13}, new int[]{Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN}));
+        wheelList.add(new Wheel(new float[]{180,180}, new int[]{1, 2}, new int[]{Color.RED, Color.BLUE}));
 
         curWheelIndex = 0;
 
-        selected = new HashMap<>();
+        selected = new ArrayList<Boolean>();
         if(randomizeList){
             long seed = System.nanoTime();
             Collections.shuffle(wheelList, new Random(seed));
@@ -65,7 +65,7 @@ public class TaskActivity extends FragmentActivity implements TaskFragment.OnTas
     public Wheel getWheelFromList(){
         if(curWheelIndex < wheelList.size()){
             Wheel w = wheelList.get(curWheelIndex);
-            selected.put(w, false);
+            selected.add(false);
             curWheelIndex++;
             return w;
         }
@@ -75,12 +75,12 @@ public class TaskActivity extends FragmentActivity implements TaskFragment.OnTas
     }
 
     @Override
-    public void nextScreen(boolean isLeftSelected, Wheel wLeft, Wheel wRight){
+    public void nextScreen(boolean isLeftSelected){
         if(isLeftSelected){
-            selected.put(wLeft, true);
+            selected.set(curWheelIndex - 2, true);
         }
         else{
-            selected.put(wRight, true);
+            selected.set(curWheelIndex - 1, true);
         }
 
         if(curWheelIndex < wheelList.size()){
@@ -94,7 +94,14 @@ public class TaskActivity extends FragmentActivity implements TaskFragment.OnTas
             turnFullScreen();
         }
         else{
-            Intent intent = new Intent(TaskActivity.this, ListActivity.class);
+            Intent intent = new Intent(TaskActivity.this, WheelListActivity.class);
+            for(int i = 0; i < wheelList.size(); i++){
+                if(selected.get(i)){
+                    Wheel tmp = wheelList.get(i);
+                    tmp.setChosen(true);
+                    wheelList.set(i, tmp);
+                }
+            }
             intent.putParcelableArrayListExtra("WHEELLIST", wheelList);
             //TODO: easier to use a boolean array than hashmap?
             startActivity(intent);

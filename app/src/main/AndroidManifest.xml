@@ -23,7 +23,14 @@
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppTheme" >
         </activity>
-        <activity android:name=".ListActivity" >
+        <activity
+            android:name=".WheelListActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity android:name=".FinalScreenActivity"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 

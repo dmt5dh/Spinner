@@ -9,8 +9,7 @@
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:background="#ffffffff">
+        tools:context=".MainActivity">
     </FrameLayout>
 
 </RelativeLayout>
