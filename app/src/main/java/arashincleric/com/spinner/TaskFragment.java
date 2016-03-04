@@ -22,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +49,8 @@ public class TaskFragment extends Fragment {
     private boolean[] quadrantTouchedLeft, quadrantTouchedRight;
 
     private boolean allowRotatingLeft, allowRotatingRight;
+
+    private Button leftSpinBtn, rightSpinBtn;
 
     WheelView wLeft;
     WheelView wRight;
@@ -209,6 +212,11 @@ public class TaskFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     rightCheckBox.setChecked(false);
+                    //TODO: log check left
+                }
+                else{
+                    //TODO: log uncheck left
+                    Toast.makeText(getContext(),"asdf", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -218,6 +226,11 @@ public class TaskFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     leftCheckBox.setChecked(false);
+                    //TODO:log check right
+                }
+                else{
+                    //TODO: log uncheck right
+                    Toast.makeText(getContext(),"asdf", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -226,22 +239,22 @@ public class TaskFragment extends Fragment {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!leftCheckBox.isChecked() && !rightCheckBox.isChecked()){
+                if (!leftCheckBox.isChecked() && !rightCheckBox.isChecked()) {
                     new AlertDialog.Builder(v.getContext())
                             .setMessage(R.string.no_checks)
                             .setNeutralButton(R.string.cancel_btn, null)
                             .show();
-                }
-                else{
+                } else {
+                    //TODO: log confirmation screen click
                     new AlertDialog.Builder(v.getContext())
                             .setMessage(R.string.confirm_wheel_msg)
-                            .setPositiveButton(R.string.yes_confirm, new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.yes_confirm, new DialogInterface.OnClickListener() { //TODO: log confirm click
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     mListener.nextScreen(leftCheckBox.isChecked());
                                 }
                             })
-                            .setNegativeButton(R.string.cancel_btn, null)
+                            .setNegativeButton(R.string.cancel_btn, null) //TODO: log cancel click
                             .show();
                 }
             }
@@ -253,6 +266,29 @@ public class TaskFragment extends Fragment {
         rightScoreView = (TextView)view.findViewById(R.id.rightScore);
         String rightScore = getContext().getResources().getString(R.string.right_score);
         rightScoreView.setText(String.format(rightScore, "-"));
+
+        leftSpinBtn = (Button)view.findViewById(R.id.leftSpinBtn);
+        leftSpinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(allowRotatingLeft){
+                    //TODO: log left click
+                    startTheSpinWithDirection("normal", 1000, true);
+                }
+
+            }
+        });
+
+        rightSpinBtn = (Button)view.findViewById(R.id.rightSpinBtn);
+        rightSpinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(allowRotatingRight){
+                    //TODO: log right click
+                    startTheSpinWithDirection("normal", 1000, false);
+                }
+            }
+        });
 
     }
 
@@ -294,17 +330,13 @@ public class TaskFragment extends Fragment {
         try {
 
             int minimumVelocityForRotation = 1000;
+            Log.e("DEBUG", "Rotation starts");
 
-            //start the rotation if the velocity is more than the value above
-            if (Math.abs(velocity) >= minimumVelocityForRotation) {
+            int direct = 1;
 
-                Log.e("DEBUG", "Rotation starts");
-
-                int direct = 1;
-
-                if (direction.equals("inversed")) {
-                    direct = -1;
-                }
+            if (direction.equals("inversed")) {
+                direct = -1;
+            }
 
 //                //if the design of tablet requires more then one orientation
 //                //set the current orientation as constant. The configuration change will reset the wheel
@@ -312,14 +344,13 @@ public class TaskFragment extends Fragment {
 //                    setOrientationConstant();
 //                }
 
-                //start the runnable process
-                if(isLeft){
-                    leftWheel.post(new FlingRunnable(direct * velocity, true));
-                }
-                else{
-                    rightWheel.post(new FlingRunnable(direct * velocity, false));
-                }
-
+            //start the runnable process
+            if (isLeft) {
+                leftSpinBtn.setClickable(false);
+                leftWheel.post(new FlingRunnable(direct * velocity, true));
+            } else {
+                rightSpinBtn.setClickable(false);
+                rightWheel.post(new FlingRunnable(direct * velocity, false));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -423,6 +454,9 @@ public class TaskFragment extends Fragment {
             int q2 = getQuadrant(e2.getX() - (width / 2), height - e2.getY() - (height / 2));
 
             float velocity = velocityX + velocityY;
+            int minimumVelocityForRotation = 1000;
+
+            String direction = "normal";
 
             // the inversed rotations
             if ((q1 == 3 && q2 == 3)
@@ -433,39 +467,46 @@ public class TaskFragment extends Fragment {
                     || (q1 == 2 && q2 == 4 && scanQuadrant[3])
                     || (q1 == 4 && q2 == 2 && scanQuadrant[3])) {
 
-//                dialer.post(new FlingRunnable(-1 * (velocityX + velocityY)));
-                startTheSpinWithDirection("inversed", velocity, isLeft);
+                direction = "inversed";
 
-            }
-            else if(((q1 == 2 && q2 == 3) || (q1 == 2 && q2 == 2)) //correct spin
-                    && velocityX < 0 && velocityY > 0){
-                velocity = -1*(velocityX / 2) + velocityY;
-                startTheSpinWithDirection("inversed", velocity, isLeft);
-            }
-            else if(((q1 == 2 && q2 == 1) || (q1 == 2 && q2 == 2))
-                    && velocityX > 0 && velocityY < 0){
-                velocity = velocityX + -1*(velocityY / 2);
-                startTheSpinWithDirection("normal", velocity, isLeft);
-            }
-            else if(((q1 == 4 && q2 == 1) || (q1 == 4 && q2 == 4)) //correct spin
-                    && velocityX > 0 && velocityY < 0){
-                velocity = velocityX + -1*(velocityY / 2);
-                startTheSpinWithDirection("inversed", velocity, isLeft);
-            }
-            else if(((q1 == 4 && q2 == 3) || (q1 == 4 && q2 == 4))
-                    && velocityX < 0 && velocityY > 0){
-                velocity = -1*(velocityX / 2) + velocityY;
-                startTheSpinWithDirection("normal", velocity, isLeft);
+            } else if (((q1 == 2 && q2 == 3) || (q1 == 2 && q2 == 2)) //correct spin
+                    && velocityX < 0 && velocityY > 0) {
+                velocity = -1 * (velocityX / 2) + velocityY;
+                direction = "inversed";
+            } else if (((q1 == 2 && q2 == 1) || (q1 == 2 && q2 == 2))
+                    && velocityX > 0 && velocityY < 0) {
+                velocity = velocityX + -1 * (velocityY / 2);
+            } else if (((q1 == 4 && q2 == 1) || (q1 == 4 && q2 == 4)) //correct spin
+                    && velocityX > 0 && velocityY < 0) {
+                velocity = velocityX + -1 * (velocityY / 2);
+                direction = "inversed";
+            } else if (((q1 == 4 && q2 == 3) || (q1 == 4 && q2 == 4))
+                    && velocityX < 0 && velocityY > 0) {
+                velocity = -1 * (velocityX / 2) + velocityY;
             }
 //            else if(q1 == 4 && q2 == 4 &&){
 //
 //            }
-            else {
-                // the normal rotation
-//                dialer.post(new FlingRunnable(velocityX + velocityY));
-                startTheSpinWithDirection("normal", velocity, isLeft);
-            }
+//            else {
+//                // the normal rotation
+////                dialer.post(new FlingRunnable(velocityX + velocityY));
+////                startTheSpinWithDirection("normal", velocity, isLeft);
+//                velocity *= -1;
+//            }
 
+
+            //start the rotation if the velocity is more than the value above
+            if (Math.abs(velocity) >= minimumVelocityForRotation) {
+                if(isLeft){
+                    //TODO:LOG FLING HERE LEFT
+                }
+                else{
+                    //TODO:LOG FLING HERE RIGHT
+                }
+                startTheSpinWithDirection(direction, velocity, isLeft);
+
+
+            }
             return true;
         }
     }
@@ -577,12 +618,20 @@ public class TaskFragment extends Fragment {
                 Log.e("DEBUG", "Rotation Ends ");
 
                 if(isLeft){
+                    //TODO: log score left
                     String leftScore = getContext().getResources().getString(R.string.left_score);
                     leftScoreView.setText(String.format(leftScore, Integer.toString(wLeft.getRewardFromWheelAngle(matrixLeft))));
+                    allowRotatingLeft = true;
+                    leftWheel.setEnabled(true);
+                    leftSpinBtn.setClickable(true);
                 }
                 else{
+                    //TODO: log score right
                     String rightScore = getContext().getResources().getString(R.string.right_score);
                     rightScoreView.setText(String.format(rightScore, Integer.toString(wRight.getRewardFromWheelAngle(matrixRight))));
+                    allowRotatingRight = true;
+                    rightWheel.setEnabled(true);
+                    rightSpinBtn.setClickable(true);
                 }
 
 //                //if the design of tablet requires more then one orientation
@@ -592,14 +641,14 @@ public class TaskFragment extends Fragment {
 //
 //                }
 
-                if(isLeft){
-                    allowRotatingLeft = false;
-                    leftWheel.setEnabled(true);
-                }
-                else{
-                    allowRotatingRight = false;
-                    rightWheel.setEnabled(true);
-                }
+//                if(isLeft){
+//                    allowRotatingLeft = false;
+//                    leftWheel.setEnabled(true);
+//                }
+//                else{
+//                    allowRotatingRight = false;
+//                    rightWheel.setEnabled(true);
+//                }
 
             }
         }
