@@ -21,10 +21,14 @@
     <string name="cancel_btn">Cancel</string>
     <string name="no_checks">Please select a wheel</string>
     <string name="confirm_wheel_msg">Are you sure?</string>
+    <string name="confirm_wheel_msg_practice">Done playing?</string>
     <string name="yes_confirm">Yes</string>
     <string name="left_score">Score is: %1$s</string>
     <string name="right_score">Score is: %1$s</string>
     <string name="confirm_list_sel">Are you sure you want to use this?</string>
     <string name="spin_btn">Spin</string>
     <string name="select_btn">Select Wheel</string>
+    <string name="continue_btn">Continue</string>
+    <string name="practice_instructions_single">Play with the wheel! Click continue when done.</string>
+    <string name="practice_instructions_double">Select a wheel and continue.</string>
 </resources>

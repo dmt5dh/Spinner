@@ -10,6 +10,9 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -48,6 +51,9 @@ public class WheelListAdapter  extends BaseAdapter implements ListAdapter{
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.wheel_list_item, null);
         }
+
+        TextView decisionNum = (TextView)view.findViewById(R.id.decisionNumText);
+        decisionNum.setText(Integer.toString(position + 1));
 
         ImageView leftWheel = (ImageView)view.findViewById(R.id.leftWheel);
         ImageView rightWheel = (ImageView)view.findViewById(R.id.rightWheel);

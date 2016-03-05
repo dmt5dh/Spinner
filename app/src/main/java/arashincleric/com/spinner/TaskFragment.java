@@ -241,6 +241,12 @@ public class TaskFragment extends Fragment {
                 if (!leftSelectBtn.isChecked() && !rightSelectBtn.isChecked()) {
                     new AlertDialog.Builder(v.getContext())
                             .setMessage(R.string.no_checks)
+                            .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogInterface dialog) {
+                                    mListener.fullScreen();
+                                }
+                            })
                             .setNeutralButton(R.string.cancel_btn, null)
                             .show();
                 } else {
@@ -251,6 +257,12 @@ public class TaskFragment extends Fragment {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     mListener.nextScreen(leftSelectBtn.isChecked());
+                                }
+                            })
+                            .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogInterface dialog) {
+                                    mListener.fullScreen();
                                 }
                             })
                             .setNegativeButton(R.string.cancel_btn, null) //TODO: log cancel click
@@ -299,7 +311,7 @@ public class TaskFragment extends Fragment {
             mListener = (OnTaskFragmentInteractionListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnEnterEmailFragmentInteractionListener");
+                    + " must implement OnTaskFragmentInteractionListener");
         }
     }
 
@@ -667,6 +679,7 @@ public class TaskFragment extends Fragment {
         // TODO: Update argument type and name
         public Wheel getWheelFromList();
         public void nextScreen(boolean isLeftSelected);
+        public void fullScreen();
     }
 
 }

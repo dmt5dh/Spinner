@@ -64,7 +64,7 @@ public class MainActivity extends FragmentActivity {
                 //TODO: do confirmation here later
                 int emailMatch = 0;
                 if(emailMatch == 0){
-                    Intent intent = new Intent(MainActivity.this, TaskActivity.class);
+                    Intent intent = new Intent(MainActivity.this, PracticeActivity.class);
                     intent.putExtra("USERID", idEntry.getText().toString());
                     startActivity(intent);
                     finish();
