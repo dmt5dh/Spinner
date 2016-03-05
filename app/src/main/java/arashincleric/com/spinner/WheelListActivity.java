@@ -46,26 +46,41 @@ public class WheelListActivity extends ListActivity {
         adapter = new WheelListAdapter(this, wheelArrayList);
         getListView().setAdapter(adapter);
 
+        boolean b = getListView().hasFocusable();
+
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 new AlertDialog.Builder(view.getContext())
                         .setMessage(R.string.confirm_list_sel)
                         .setNegativeButton(R.string.cancel_btn, null)
+                        .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                turnFullScreen();
+                            }
+                        })
                         .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                //TODO: log selection here
                                 startFinalScreen(wheelArrayList.get(position));
                             }
                         })
                         .show();
             }
         });
+        setupUI(findViewById(android.R.id.content));
         turnFullScreen();
     }
 
-    public void startFinalScreen(WheelTuple w){
+    @Override
+    public void onBackPressed(){
 
+    }
+
+    public void startFinalScreen(WheelTuple w){
+        //TODO: start final screen
     }
 
     /**

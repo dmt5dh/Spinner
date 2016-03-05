@@ -23,6 +23,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,8 +56,8 @@ public class TaskFragment extends Fragment {
     WheelView wLeft;
     WheelView wRight;
 
-    CheckBox leftCheckBox;
-    CheckBox rightCheckBox;
+    ToggleButton leftSelectBtn;
+    ToggleButton rightSelectBtn;
 
     Button confirmBtn;
 
@@ -204,33 +205,31 @@ public class TaskFragment extends Fragment {
             }
         });
 
-        leftCheckBox = (CheckBox)view.findViewById(R.id.leftCheckBox);
-        rightCheckBox = (CheckBox)view.findViewById(R.id.rightCheckBox);
+        leftSelectBtn = (ToggleButton)view.findViewById(R.id.leftSelectBtn);
+        rightSelectBtn = (ToggleButton)view.findViewById(R.id.rightSelectBtn);
 
-        leftCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        leftSelectBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    rightCheckBox.setChecked(false);
+                    rightSelectBtn.setChecked(false);
                     //TODO: log check left
                 }
                 else{
                     //TODO: log uncheck left
-                    Toast.makeText(getContext(),"asdf", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        rightCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        rightSelectBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    leftCheckBox.setChecked(false);
+                    leftSelectBtn.setChecked(false);
                     //TODO:log check right
                 }
                 else{
                     //TODO: log uncheck right
-                    Toast.makeText(getContext(),"asdf", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -239,7 +238,7 @@ public class TaskFragment extends Fragment {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!leftCheckBox.isChecked() && !rightCheckBox.isChecked()) {
+                if (!leftSelectBtn.isChecked() && !rightSelectBtn.isChecked()) {
                     new AlertDialog.Builder(v.getContext())
                             .setMessage(R.string.no_checks)
                             .setNeutralButton(R.string.cancel_btn, null)
@@ -251,7 +250,7 @@ public class TaskFragment extends Fragment {
                             .setPositiveButton(R.string.yes_confirm, new DialogInterface.OnClickListener() { //TODO: log confirm click
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    mListener.nextScreen(leftCheckBox.isChecked());
+                                    mListener.nextScreen(leftSelectBtn.isChecked());
                                 }
                             })
                             .setNegativeButton(R.string.cancel_btn, null) //TODO: log cancel click

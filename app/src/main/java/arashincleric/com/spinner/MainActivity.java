@@ -65,7 +65,7 @@ public class MainActivity extends FragmentActivity {
                 int emailMatch = 0;
                 if(emailMatch == 0){
                     Intent intent = new Intent(MainActivity.this, TaskActivity.class);
-                    intent.putExtra("USERNAME", idEntry.getText().toString());
+                    intent.putExtra("USERID", idEntry.getText().toString());
                     startActivity(intent);
                     finish();
                 }
@@ -96,6 +96,11 @@ public class MainActivity extends FragmentActivity {
         });
 
         setupUI(findViewById(android.R.id.content));
+    }
+
+    @Override
+    public void onBackPressed(){
+
     }
 
 //    /**

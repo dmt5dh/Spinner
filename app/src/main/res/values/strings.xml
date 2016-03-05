@@ -26,4 +26,5 @@
     <string name="right_score">Score is: %1$s</string>
     <string name="confirm_list_sel">Are you sure you want to use this?</string>
     <string name="spin_btn">Spin</string>
+    <string name="select_btn">Select Wheel</string>
 </resources>

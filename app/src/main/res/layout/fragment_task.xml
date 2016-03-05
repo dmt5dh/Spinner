@@ -49,22 +49,15 @@
                 android:layout_height="0px"
                 android:layout_weight="3">
 
-                <CheckBox
-                    android:id="@+id/leftCheckBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true" />
-
                 <TextView
                     android:id="@+id/leftScore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Medium Text"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_alignParentTop="true"
+                    android:layout_alignLeft="@+id/leftSelectBtn"
+                    android:layout_alignStart="@+id/leftSelectBtn" />
 
                 <Button
                     style="?android:attr/buttonStyleSmall"
@@ -72,7 +65,16 @@
                     android:layout_height="wrap_content"
                     android:text="@string/spin_btn"
                     android:id="@+id/leftSpinBtn"
-                    android:layout_alignParentTop="true"
+                    android:layout_above="@+id/leftSelectBtn"
+                    android:layout_centerHorizontal="true" />
+
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textOff="@string/select_btn"
+                    android:textOn="@string/select_btn"
+                    android:id="@+id/leftSelectBtn"
+                    android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true" />
             </RelativeLayout>
 
@@ -113,22 +115,15 @@
                 android:layout_height="0dp"
                 android:layout_weight="3">
 
-                <CheckBox
-                    android:id="@+id/rightCheckBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true" />
-
                 <TextView
                     android:id="@+id/rightScore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Medium Text"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_alignParentTop="true"
+                    android:layout_alignLeft="@+id/rightSelectBtn"
+                    android:layout_alignStart="@+id/rightSelectBtn" />
 
                 <Button
                     style="?android:attr/buttonStyleSmall"
@@ -136,7 +131,16 @@
                     android:layout_height="wrap_content"
                     android:text="@string/spin_btn"
                     android:id="@+id/rightSpinBtn"
-                    android:layout_alignParentTop="true"
+                    android:layout_above="@+id/rightSelectBtn"
+                    android:layout_centerHorizontal="true" />
+
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textOff="@string/select_btn"
+                    android:textOn="@string/select_btn"
+                    android:id="@+id/rightSelectBtn"
+                    android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true" />
             </RelativeLayout>
         </LinearLayout>
