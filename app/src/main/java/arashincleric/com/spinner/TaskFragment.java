@@ -64,6 +64,9 @@ public class TaskFragment extends Fragment {
     TextView leftScoreView;
     TextView rightScoreView;
 
+    Runnable flingRunnableLeft;
+    Runnable flingRunnableRight;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -339,8 +342,7 @@ public class TaskFragment extends Fragment {
     private void startTheSpinWithDirection(String direction, float velocity, boolean isLeft) {
 
         try {
-
-            int minimumVelocityForRotation = 1000;
+            
             Log.e("DEBUG", "Rotation starts");
 
             int direct = 1;
@@ -358,10 +360,12 @@ public class TaskFragment extends Fragment {
             //start the runnable process
             if (isLeft) {
                 leftSpinBtn.setClickable(false);
-                leftWheel.post(new FlingRunnable(direct * velocity, true));
+                flingRunnableLeft = new FlingRunnable(direct * velocity, true);
+                leftWheel.post(flingRunnableLeft);
             } else {
                 rightSpinBtn.setClickable(false);
-                rightWheel.post(new FlingRunnable(direct * velocity, false));
+                flingRunnableRight = new FlingRunnable(direct * velocity, false);
+                rightWheel.post(flingRunnableRight);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -663,6 +667,13 @@ public class TaskFragment extends Fragment {
 
             }
         }
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        leftWheel.removeCallbacks(flingRunnableLeft);
+        leftWheel.removeCallbacks(flingRunnableRight);
     }
 
     /**

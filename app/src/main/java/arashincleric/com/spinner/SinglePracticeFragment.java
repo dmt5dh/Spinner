@@ -51,6 +51,8 @@ public class SinglePracticeFragment extends Fragment {
 
     TextView scoreView;
 
+    Runnable flingRunnable;
+
     public static SinglePracticeFragment newInstance() {
         SinglePracticeFragment fragment = new SinglePracticeFragment();
         Bundle args = new Bundle();
@@ -302,8 +304,6 @@ public class SinglePracticeFragment extends Fragment {
     private void startTheSpinWithDirection(String direction, float velocity) {
 
         try {
-
-            int minimumVelocityForRotation = 1000;
             Log.e("DEBUG", "Rotation starts");
 
             int direct = 1;
@@ -320,7 +320,8 @@ public class SinglePracticeFragment extends Fragment {
 
             spinBtn.setClickable(false);
             //start the runnable process
-            wheelView.post(new FlingRunnable(direct * velocity));
+            flingRunnable = new FlingRunnable(direct * velocity);
+            wheelView.post(flingRunnable);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -430,6 +431,12 @@ public class SinglePracticeFragment extends Fragment {
             throw new ClassCastException(context.toString()
                     + " must implement OnSinglePracticeFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        wheelView.removeCallbacks(flingRunnable);
     }
 
     /**
