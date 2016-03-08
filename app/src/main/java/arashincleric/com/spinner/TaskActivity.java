@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,8 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
     private ArrayList<Boolean> selected;
     private int curWheelIndex;
 
+    protected int stageNum;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +70,9 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
         mContent = TaskFragment.newInstance();
         transaction.add(R.id.fragmentContainer, mContent).commit();
 
-        super.stageNum = 1;
+        stageNum = 1;
 
-        userID = getIntent().getStringExtra("USERID");
+        super.userID = getIntent().getStringExtra("USERID");
 
         super.setupUI(findViewById(android.R.id.content));
     }
@@ -110,7 +113,7 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
             transaction.replace(R.id.fragmentContainer, mContent).commit();
             fragmentManager.executePendingTransactions();
 //            turnFullScreen();
-            super.stageNum++;
+            stageNum++;
         }
         else{
             Intent intent = new Intent(TaskActivity.this, WheelListActivity.class);
@@ -130,6 +133,16 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
     @Override
     public void fullScreen(){
         super.turnFullScreen();
+    }
+
+    @Override
+    public void logEventTask(String action, String result, String outcome){
+        try{
+            super.logEvent(Calendar.getInstance(), "Task " + stageNum, action, result, outcome);
+        }
+        catch(Exception e){
+            Log.e("ERROR", "Error logging " + result);
+        }
     }
 
 }

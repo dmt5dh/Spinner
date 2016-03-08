@@ -71,7 +71,6 @@ public class TaskFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      */
-    // TODO: Rename and change types and number of parameters
     public static TaskFragment newInstance() {
         TaskFragment fragment = new TaskFragment();
         Bundle args = new Bundle();
@@ -216,7 +215,8 @@ public class TaskFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     rightSelectBtn.setChecked(false);
-                    //TODO: log check left
+                    //LOG: log check left
+                    mListener.logEventTask("Choice", "Chose left", "-");
                 }
                 else{
                     //TODO: log uncheck left
@@ -229,7 +229,8 @@ public class TaskFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     leftSelectBtn.setChecked(false);
-                    //TODO:log check right
+                    //LOG:log check right
+                    mListener.logEventTask("Choice", "Chose right", "-");
                 }
                 else{
                     //TODO: log uncheck right
@@ -242,6 +243,7 @@ public class TaskFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!leftSelectBtn.isChecked() && !rightSelectBtn.isChecked()) {
+                    mListener.logEventTask("Clicked continue", "Practice task not resolved", "-");
                     new AlertDialog.Builder(v.getContext())
                             .setMessage(R.string.no_checks)
                             .setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -253,12 +255,14 @@ public class TaskFragment extends Fragment {
                             .setNeutralButton(R.string.cancel_btn, null)
                             .show();
                 } else {
-                    //TODO: log confirmation screen click
+                    //LOG: log confirmation screen click
+                    mListener.logEventTask("Clicked continue", "Practice task resolution", "-");
                     new AlertDialog.Builder(v.getContext())
                             .setMessage(R.string.confirm_wheel_msg)
-                            .setPositiveButton(R.string.yes_confirm, new DialogInterface.OnClickListener() { //TODO: log confirm click
+                            .setPositiveButton(R.string.yes_confirm, new DialogInterface.OnClickListener() { //LOG: log confirm click
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    mListener.logEventTask("Confirm continue", "Practice task resolution", "-");
                                     mListener.nextScreen(leftSelectBtn.isChecked());
                                 }
                             })
@@ -268,7 +272,13 @@ public class TaskFragment extends Fragment {
                                     mListener.fullScreen();
                                 }
                             })
-                            .setNegativeButton(R.string.cancel_btn, null) //TODO: log cancel click
+                            .setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //LOG: log cancel click
+                                    mListener.logEventTask("Cancel continue", "Practice task resolution", "-");
+                                }
+                            })
                             .show();
                 }
             }
@@ -286,7 +296,8 @@ public class TaskFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(allowRotatingLeft){
-                    //TODO: log left click
+                    //LOG: log left click
+                    mListener.logEventTask("Experimenting", "Spin left", "-");
                     startTheSpinWithDirection("normal", 1000, true);
                 }
 
@@ -298,7 +309,8 @@ public class TaskFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(allowRotatingRight){
-                    //TODO: log right click
+                    //LOG: log right click
+                    mListener.logEventTask("Experimenting", "Spin right", "-");
                     startTheSpinWithDirection("normal", 1000, false);
                 }
             }
@@ -513,10 +525,12 @@ public class TaskFragment extends Fragment {
             //start the rotation if the velocity is more than the value above
             if (Math.abs(velocity) >= minimumVelocityForRotation) {
                 if(isLeft){
-                    //TODO:LOG FLING HERE LEFT
+                    mListener.logEventTask("Experimenting", "Spin left", "-");
+                    //LOG:LOG FLING HERE LEFT
                 }
                 else{
-                    //TODO:LOG FLING HERE RIGHT
+                    mListener.logEventTask("Experimenting", "Spin right", "-");
+                    //LOG:LOG FLING HERE RIGHT
                 }
                 startTheSpinWithDirection(direction, velocity, isLeft);
 
@@ -633,17 +647,21 @@ public class TaskFragment extends Fragment {
                 Log.e("DEBUG", "Rotation Ends ");
 
                 if(isLeft){
-                    //TODO: log score left
+                    //LOG: log score left
                     String leftScore = getContext().getResources().getString(R.string.left_score);
-                    leftScoreView.setText(String.format(leftScore, Integer.toString(wLeft.getRewardFromWheelAngle(matrixLeft))));
+                    String leftScoreRecord = Integer.toString(wLeft.getRewardFromWheelAngle(matrixLeft));
+                    mListener.logEventTask("Experimenting", "Left finished spinning", leftScoreRecord);
+                    leftScoreView.setText(String.format(leftScore, leftScoreRecord));
                     allowRotatingLeft = true;
                     leftWheel.setEnabled(true);
                     leftSpinBtn.setClickable(true);
                 }
                 else{
-                    //TODO: log score right
+                    //LOG: log score right
                     String rightScore = getContext().getResources().getString(R.string.right_score);
-                    rightScoreView.setText(String.format(rightScore, Integer.toString(wRight.getRewardFromWheelAngle(matrixRight))));
+                    String rightScoreRecord = Integer.toString(wRight.getRewardFromWheelAngle(matrixRight));
+                    mListener.logEventTask("Experimenting", "Right finished spinning", rightScoreRecord);
+                    rightScoreView.setText(String.format(rightScore, rightScoreRecord));
                     allowRotatingRight = true;
                     rightWheel.setEnabled(true);
                     rightSpinBtn.setClickable(true);
@@ -687,10 +705,10 @@ public class TaskFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnTaskFragmentInteractionListener {
-        // TODO: Update argument type and name
         public Wheel getWheelFromList();
         public void nextScreen(boolean isLeftSelected);
         public void fullScreen();
+        public void logEventTask(String action, String result, String outcome);
     }
 
 }

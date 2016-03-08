@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +40,7 @@ public class PracticeActivity extends AbstractTaskActivity implements
         wheelList.add(new Wheel(new float[]{180, 180}, new int[]{1,2}, new int[]{Color.RED, Color.BLUE}));
         wheelList.add(new Wheel(new float[]{90,90,90,90}, new int[]{4, 5, 6, 7}, new int[]{Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW}));
 
-        userID = getIntent().getStringExtra("USERID");
+        super.userID = getIntent().getStringExtra("USERID");
 
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -72,6 +73,16 @@ public class PracticeActivity extends AbstractTaskActivity implements
     }
 
     @Override
+    public void logEventSingle(String action, String result, String outcome){
+        try{
+            super.logEvent(Calendar.getInstance(), "Practice", action, result, outcome);
+        }
+        catch(Exception e){
+            Log.e("ERROR", "Error logging " + result);
+        }
+    }
+
+    @Override
     public Wheel getWheelFromList(){
         Wheel w = wheelList.get(0);
         if(wheelList.size() > 1){
@@ -86,6 +97,16 @@ public class PracticeActivity extends AbstractTaskActivity implements
         intent.putExtra("USERID", userID);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void logEventTask(String action, String result, String outcome){
+        try{
+            super.logEvent(Calendar.getInstance(), "Practice" , action, result, outcome);
+        }
+        catch(Exception e){
+            Log.e("ERROR", "Error logging " + result);
+        }
     }
 
     @Override

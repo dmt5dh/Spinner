@@ -142,7 +142,8 @@ public class SinglePracticeFragment extends Fragment {
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: log confirmation screen click
+                //LOG: click continue btn
+                mListener.logEventSingle("Clicked continue", "Practice single resolution", "-");
                 new AlertDialog.Builder(v.getContext())
                         .setMessage(R.string.confirm_wheel_msg_practice)
                         .setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -151,13 +152,21 @@ public class SinglePracticeFragment extends Fragment {
                                 mListener.fullScreenSingle();
                             }
                         })
-                        .setPositiveButton(R.string.yes_confirm, new DialogInterface.OnClickListener() { //TODO: log confirm click
+                        .setPositiveButton(R.string.yes_confirm, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                //LOG: confirm continue btn
+                                mListener.logEventSingle("Confirmed continue", "Practice single resolution", "-");
                                 mListener.nextScreenSingle();
                             }
                         })
-                        .setNegativeButton(R.string.cancel_btn, null) //TODO: log cancel click
+                        .setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //LOG: cancel continue btn
+                                mListener.logEventSingle("Canceled continue", "Practice single resolution", "-");
+                            }
+                        })
                         .show();
             }
         });
@@ -171,7 +180,8 @@ public class SinglePracticeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(allowRotating){
-                    //TODO: log left click
+                    //LOG: spin button pressed
+                    mListener.logEventSingle("Experimenting", "Spinned single", "-");
                     startTheSpinWithDirection("normal", 1000);
                 }
 
@@ -230,7 +240,8 @@ public class SinglePracticeFragment extends Fragment {
 
             //start the rotation if the velocity is more than the value above
             if (Math.abs(velocity) >= minimumVelocityForRotation) {
-                //TODO:LOG FLING HERE
+                //LOG: spinner flung
+                mListener.logEventSingle("Experimenting", "Spinned single", "-");
                 startTheSpinWithDirection(direction, velocity);
 
 
@@ -394,7 +405,10 @@ public class SinglePracticeFragment extends Fragment {
                 // Rotation ends here
                 Log.e("DEBUG", "Rotation Ends ");
                 String score = getContext().getResources().getString(R.string.left_score);
-                scoreView.setText(String.format(score, Integer.toString(wViewObj.getRewardFromWheelAngle(matrix))));
+                String scoreRecorded = Integer.toString(wViewObj.getRewardFromWheelAngle(matrix));
+                //LOG: score
+                mListener.logEventSingle("Experimenting", "Single spinner finished spinning", scoreRecorded);
+                scoreView.setText(String.format(score, scoreRecorded));
                 allowRotating = true;
                 wheelView.setEnabled(true);
                 spinBtn.setClickable(true);
@@ -453,6 +467,8 @@ public class SinglePracticeFragment extends Fragment {
         public Wheel getWheelFromListSingle();
         public void nextScreenSingle();
         public void fullScreenSingle();
+        public void logEventSingle(String action, String result, String outcome);
+
     }
 
 }

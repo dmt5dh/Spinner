@@ -29,12 +29,10 @@ public abstract class AbstractTaskActivity extends FragmentActivity {
     protected final static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     protected final static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss.SSS", Locale.US);
     protected String userID;
-    protected int stageNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         createLogFiles();
     }
 
@@ -176,7 +174,7 @@ public abstract class AbstractTaskActivity extends FragmentActivity {
      * @param dataToSave String data to write
      * @throws Exception
      */
-    public void writeToFile(File f, String dataToSave) throws Exception{
+    public synchronized void writeToFile(File f, String dataToSave) throws Exception{
         FileOutputStream eventLogFileStream = new FileOutputStream(f, true);
         eventLogFileStream.write(dataToSave.getBytes());
         eventLogFileStream.close();
@@ -190,13 +188,13 @@ public abstract class AbstractTaskActivity extends FragmentActivity {
      * @param outcome if applicable, get score
      * @throws Exception
      */
-    public void logEvent(Calendar now, String action, String result, String outcome) throws Exception{
+    public void logEvent(Calendar now, String stage, String action, String result, String outcome) throws Exception{
 
         String dataToSave = "TabletIDHOLDER\t"
                 + userID + "\t"
                 + dateFormat.format(now.getTime()) + "\t"
                 + timeFormat.format(now.getTime()) + "\t"
-                + stageNum + "\t"
+                + stage + "\t"
                 + action + "\t"
                 + result + "\t"
                 + outcome + "\n";
