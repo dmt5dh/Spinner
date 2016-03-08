@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-//TODO: go back and create a superclass for practice and task because they do the same things...
 public class PracticeActivity extends AbstractTaskActivity implements
         SinglePracticeFragment.OnSinglePracticeFragmentInteractionListener,
         TaskFragment.OnTaskFragmentInteractionListener{

@@ -45,7 +45,6 @@ public class WheelView extends ImageView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        // TODO Auto-generated method stub
         super.onDraw(canvas);
 
         int centerX = (int)(rectf.left + rectf.right) / 2;
