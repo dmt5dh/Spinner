@@ -21,7 +21,7 @@ public class Wheel implements Parcelable{
     private int[] COLORS;
     RectF rectf = new RectF (0, 0, 2000, 2000); //change this and below for better resolution
     float temp=0;
-    boolean isChosen;
+    private boolean isChosen;
 
     public Wheel(){
     }

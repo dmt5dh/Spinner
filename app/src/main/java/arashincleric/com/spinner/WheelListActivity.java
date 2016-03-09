@@ -2,6 +2,7 @@ package arashincleric.com.spinner;
 
 import android.app.ListActivity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -84,7 +85,16 @@ public class WheelListActivity extends ListActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 //LOG: log selection here
                                 try{
-                                    logEvent(Calendar.getInstance(), "Summary", "Game selection", "Game " + position + " selected", "-");
+                                    logEvent(Calendar.getInstance(), "Summary", "Game selection", "Game " + (position + 1) + " selected", "-");
+                                    Intent intent = new Intent(WheelListActivity.this, FinalGameActivity.class);
+                                    WheelTuple wheelTuple = wheelArrayList.get(position);
+                                    ArrayList<Wheel> wheelArrayToSend = new ArrayList<Wheel>();
+                                    wheelArrayToSend.add(wheelTuple.left); //Left will always be first
+                                    wheelArrayToSend.add(wheelTuple.right);
+                                    intent.putParcelableArrayListExtra("WHEELLIST", wheelArrayToSend);
+                                    intent.putExtra("USERNAME", userID);
+                                    startActivity(intent);
+
                                 }
                                 catch(Exception e){
                                     Log.e("ERROR", "Error logging summary showing");

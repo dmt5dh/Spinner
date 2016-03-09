@@ -1,10 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context="arashincleric.com.spinner.FinalGameFragment"
     android:orientation="vertical"
-    android:weightSum="10"
-    tools:context="arashincleric.com.spinner.TaskFragment">
+    android:weightSum="10">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -55,8 +54,9 @@
                     android:layout_height="wrap_content"
                     android:text="Medium Text"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_above="@+id/leftSpinBtn"
+                    android:layout_alignRight="@+id/leftSelectBtn"
+                    android:layout_alignEnd="@+id/leftSelectBtn" />
 
                 <Button
                     style="?android:attr/buttonStyleSmall"
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/spin_btn"
                     android:id="@+id/leftSpinBtn"
-                    android:layout_centerVertical="true"
+                    android:layout_above="@+id/leftSelectBtn"
                     android:layout_centerHorizontal="true" />
 
                 <ToggleButton
@@ -121,7 +121,8 @@
                     android:text="Medium Text"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_alignLeft="@+id/rightSelectBtn"
+                    android:layout_alignStart="@+id/rightSelectBtn" />
 
                 <Button
                     style="?android:attr/buttonStyleSmall"
@@ -129,7 +130,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/spin_btn"
                     android:id="@+id/rightSpinBtn"
-                    android:layout_centerVertical="true"
+                    android:layout_above="@+id/rightSelectBtn"
                     android:layout_centerHorizontal="true" />
 
                 <ToggleButton

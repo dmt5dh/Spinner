@@ -34,38 +34,38 @@ import android.widget.ToggleButton;
  */
 public class TaskFragment extends Fragment {
 
-    private OnTaskFragmentInteractionListener mListener;
+    protected OnTaskFragmentInteractionListener mListener;
 
-    private static Bitmap leftImageOriginal, leftImageScaled;
-    private static Bitmap rightImageOriginal, rightImageScaled;
-    private static Matrix matrixLeft, matrixRight;
+    protected static Bitmap leftImageOriginal, leftImageScaled;
+    protected static Bitmap rightImageOriginal, rightImageScaled;
+    protected static Matrix matrixLeft, matrixRight;
 
-    private ImageView leftWheel, rightWheel;
-    private int leftHeight, leftWidth;
-    private int rightHeight, rightWidth;
+    protected ImageView leftWheel, rightWheel;
+    protected int leftHeight, leftWidth;
+    protected int rightHeight, rightWidth;
 
-    private GestureDetector detectorLeft, detectorRight;
+    protected GestureDetector detectorLeft, detectorRight;
 
     // needed for detecting the inversed rotations
-    private boolean[] quadrantTouchedLeft, quadrantTouchedRight;
+    protected boolean[] quadrantTouchedLeft, quadrantTouchedRight;
 
-    private boolean allowRotatingLeft, allowRotatingRight;
+    protected boolean allowRotatingLeft, allowRotatingRight;
 
-    private Button leftSpinBtn, rightSpinBtn;
+    protected Button leftSpinBtn, rightSpinBtn;
 
-    WheelView wLeft;
-    WheelView wRight;
+    protected WheelView wLeft;
+    protected WheelView wRight;
 
-    ToggleButton leftSelectBtn;
-    ToggleButton rightSelectBtn;
+    protected ToggleButton leftSelectBtn;
+    protected ToggleButton rightSelectBtn;
 
-    Button confirmBtn;
+    protected Button confirmBtn;
 
-    TextView leftScoreView;
-    TextView rightScoreView;
+    protected TextView leftScoreView;
+    protected TextView rightScoreView;
 
-    Runnable flingRunnableLeft;
-    Runnable flingRunnableRight;
+    protected Runnable flingRunnableLeft;
+    protected Runnable flingRunnableRight;
 
     /**
      * Use this factory method to create a new instance of
@@ -98,6 +98,8 @@ public class TaskFragment extends Fragment {
         rightImageScaled = null;
         matrixLeft = null;
         matrixRight = null;
+
+        setRetainInstance(true);
 
     }
 
@@ -338,7 +340,7 @@ public class TaskFragment extends Fragment {
     /**
      * @return The selected quadrant.
      */
-    private static int getQuadrant(double x, double y) {
+    protected static int getQuadrant(double x, double y) {
         if (x >= 0) {
             return y >= 0 ? 1 : 4;
         } else {
@@ -351,7 +353,7 @@ public class TaskFragment extends Fragment {
      * @param direction - String  of normal or inverse wheel direction
      * @param velocity - Rotation velocity
      */
-    private void startTheSpinWithDirection(String direction, float velocity, boolean isLeft) {
+    protected void startTheSpinWithDirection(String direction, float velocity, boolean isLeft) {
 
         try {
             
@@ -387,7 +389,7 @@ public class TaskFragment extends Fragment {
     /**
      * @return The angle of the unit circle with the image view's center
      */
-    private double getAngle(double xTouch, double yTouch, boolean isLeft) {
+    protected double getAngle(double xTouch, double yTouch, boolean isLeft) {
         int width = isLeft ? leftWidth : rightWidth;
         int height = isLeft ? leftHeight : rightHeight;
         double x = xTouch - (width / 2d);
@@ -412,7 +414,7 @@ public class TaskFragment extends Fragment {
      *
      * @param degrees The degrees, the dialer should get rotated.
      */
-    private void rotateDialer(float degrees, boolean isLeft) {
+    protected void rotateDialer(float degrees, boolean isLeft) {
         int width = isLeft ? leftWidth : rightWidth;
         int height = isLeft ? leftHeight : rightHeight;
 
@@ -463,7 +465,7 @@ public class TaskFragment extends Fragment {
     /**
      * Simple implementation of a for detecting a fling event.
      */
-    private class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
+    protected class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
 
         boolean isLeft;
         public MyGestureDetector(boolean isLeft){
@@ -543,7 +545,7 @@ public class TaskFragment extends Fragment {
     /**
      * Simple implementation of an for registering the dialer's touch events.
      */
-    private class MyOnTouchListener implements View.OnTouchListener {
+    protected class MyOnTouchListener implements View.OnTouchListener {
 
         private double startAngle;
         boolean isLeft;
@@ -612,7 +614,7 @@ public class TaskFragment extends Fragment {
     /**
      * A {@link Runnable} for animating the the dialer's fling.
      */
-    private class FlingRunnable implements Runnable {
+    protected class FlingRunnable implements Runnable {
 
         private float velocity;
         private boolean isLeft;
@@ -666,22 +668,6 @@ public class TaskFragment extends Fragment {
                     rightWheel.setEnabled(true);
                     rightSpinBtn.setClickable(true);
                 }
-
-//                //if the design of tablet requires more then one orientation
-//                //set the needed method for orientation
-//                if (isTablet()) {
-//                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-//
-//                }
-
-//                if(isLeft){
-//                    allowRotatingLeft = false;
-//                    leftWheel.setEnabled(true);
-//                }
-//                else{
-//                    allowRotatingRight = false;
-//                    rightWheel.setEnabled(true);
-//                }
 
             }
         }

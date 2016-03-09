@@ -75,6 +75,8 @@ public class SinglePracticeFragment extends Fragment {
         imageOriginal = null;
         imageScaled = null;
         matrix = null;
+
+        setRetainInstance(true);
     }
 
     @Override

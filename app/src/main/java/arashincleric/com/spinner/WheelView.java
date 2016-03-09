@@ -20,6 +20,7 @@ public class WheelView extends ImageView {
     RectF rectf;
     private float FONT_SIZE;
     float temp=0;
+    private Wheel wheelObject;
 
     public WheelView(Context context){
         super(context);
@@ -27,6 +28,8 @@ public class WheelView extends ImageView {
 
     public WheelView(Context context, Wheel w) {
         super(context);
+
+        wheelObject = w;
 
         float[] wValueDegree = w.getValue_degree();
         value_degree = new float[wValueDegree.length];
@@ -146,5 +149,9 @@ public class WheelView extends ImageView {
         FONT_SIZE = 15f;
         this.draw(c);
         return b;
+    }
+
+    public Wheel getWheelObject(){
+        return wheelObject;
     }
 }

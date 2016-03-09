@@ -31,4 +31,7 @@
     <string name="continue_btn">Continue</string>
     <string name="practice_instructions_single">Play with the wheel! Click continue when done.</string>
     <string name="practice_instructions_double">Select a wheel and continue.</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
