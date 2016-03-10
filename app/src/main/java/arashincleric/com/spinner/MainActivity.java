@@ -62,8 +62,8 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 //TODO: do confirmation here later
-                int emailMatch = 0;
-                if(emailMatch == 0){
+                int validated = validateEntries();
+                if(validated == 0){
                     Intent intent = new Intent(MainActivity.this, PracticeActivity.class);
                     intent.putExtra("USERID", idEntry.getText().toString());
                     startActivity(intent);
@@ -71,21 +71,12 @@ public class MainActivity extends FragmentActivity {
                 }
                 else{
                     String error;
-                    switch (emailMatch){
-                        case 1:
-                            error = getResources().getString(R.string.email_error_empty);
-                            break;
-                        case 2:
-                            error = getResources().getString(R.string.email_error_invalid);
-                            break;
-                        case 3:
-                            error = getResources().getString(R.string.email_error_match);
-                            break;
-                        case 4:
-                            error = getResources().getString(R.string.email_error_redundant);
+                    switch (validated){
+                        case -1:
+                            error = getResources().getString(R.string.login_validate_error);
                             break;
                         default:
-                            error = "Error with email";
+                            error = "Error with fields";
                     }
                     new AlertDialog.Builder(v.getContext())
                             .setMessage(error)
@@ -96,6 +87,17 @@ public class MainActivity extends FragmentActivity {
         });
 
         setupUI(findViewById(android.R.id.content));
+    }
+
+    public int validateEntries(){
+        int validateResult = -1;
+        if(!nameEntry.getText().toString().isEmpty()
+                && !idEntry.getText().toString().isEmpty()
+                && !adminEntry.getText().toString().isEmpty()
+                && !locationEntry.getText().toString().isEmpty()){
+            validateResult = 0;
+        }
+        return validateResult;
     }
 
     @Override

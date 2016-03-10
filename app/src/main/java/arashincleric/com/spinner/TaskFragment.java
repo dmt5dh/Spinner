@@ -56,8 +56,8 @@ public class TaskFragment extends Fragment {
     protected WheelView wLeft;
     protected WheelView wRight;
 
-    protected ToggleButton leftSelectBtn;
-    protected ToggleButton rightSelectBtn;
+    protected CheckBox leftSelectBtn;
+    protected CheckBox rightSelectBtn;
 
     protected Button confirmBtn;
 
@@ -209,8 +209,8 @@ public class TaskFragment extends Fragment {
             }
         });
 
-        leftSelectBtn = (ToggleButton)view.findViewById(R.id.leftSelectBtn);
-        rightSelectBtn = (ToggleButton)view.findViewById(R.id.rightSelectBtn);
+        leftSelectBtn = (CheckBox)view.findViewById(R.id.leftSelectBtn);
+        rightSelectBtn = (CheckBox)view.findViewById(R.id.rightSelectBtn);
 
         leftSelectBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

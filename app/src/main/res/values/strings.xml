@@ -14,10 +14,7 @@
     <string name="login_location_hint">George Mason University</string>
     <string name="login_note">Please enter the e-mail address you used to register.
         Remember this is the e-mail address that will be used to pay you</string>
-    <string name="email_error_match">E-mails do not match</string>
-    <string name="email_error_empty">Please fill out all fields</string>
-    <string name="email_error_invalid">Please enter valid email address</string>
-    <string name="email_error_redundant">You can only complete one session per email address.</string>
+    <string name="login_validate_error">Please fill out all fields</string>
     <string name="cancel_btn">Cancel</string>
     <string name="no_checks">Please select a wheel</string>
     <string name="confirm_wheel_msg">Are you sure?</string>
@@ -30,7 +27,7 @@
     <string name="select_btn">Select Wheel</string>
     <string name="continue_btn">Continue</string>
     <string name="practice_instructions_single">Play with the wheel! Click continue when done.</string>
-    <string name="practice_instructions_double">Select a wheel and continue.</string>
+    <string name="practice_instructions_double">Practice testing and choosing a wheel.</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
