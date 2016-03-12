@@ -1,6 +1,8 @@
 package arashincleric.com.spinner;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,8 +20,22 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,10 +67,51 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
         setContentView(R.layout.activity_task);
 
         wheelList = new ArrayList<Wheel>();
-        wheelList.add(new Wheel(new float[]{30,60,270}, new int[]{1, 2, 3}, new int[]{Color.RED, Color.BLUE, Color.GREEN}));
-        wheelList.add(new Wheel(new float[]{10,90,260}, new int[]{4, 5, 6}, new int[]{Color.RED, Color.BLUE, Color.GREEN}));
-        wheelList.add(new Wheel(new float[]{30,60,90, 90, 90}, new int[]{9, 10, 11, 12,13}, new int[]{Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN}));
-        wheelList.add(new Wheel(new float[]{180,180}, new int[]{1, 2}, new int[]{Color.RED, Color.BLUE}));
+
+        InputStream is = getResources().openRawResource(R.raw.wheel);
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
+        try{
+            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            int n;
+            while ((n = reader.read(buffer)) != -1){
+                writer.write(buffer, 0, n);
+            }
+            is.close();
+        }
+        catch (IOException e){
+            Log.e("ERROR", "Error loading wheels");
+        }
+
+        String json = writer.toString();
+        try{
+            JSONArray jsonArray = new JSONArray(json);
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject jsonWheel = jsonArray.getJSONObject(i).getJSONObject("wheel");
+                JSONArray sectionsJsonArray = jsonWheel.getJSONArray("sections");
+                JSONArray priceJsonArray = jsonWheel.getJSONArray("pricelist");
+                JSONArray colorJsonList = jsonWheel.getJSONArray("colorlist");
+
+                float[] sectionsArray = new float[sectionsJsonArray.length()];
+                int[] priceArray = new int[sectionsJsonArray.length()];
+                String[] colorArray = new String[sectionsJsonArray.length()];
+                for(int j = 0; j < sectionsJsonArray.length(); j++){
+                    sectionsArray[j] = (float)((int)sectionsJsonArray.get(j) / 1.0); //To convert int to float
+                    priceArray[j] = (int)priceJsonArray.get(j);
+                    colorArray[j] = (String)colorJsonList.get(j);
+                }
+                wheelList.add(new Wheel(this, sectionsArray, priceArray, colorArray));
+            }
+        }
+        catch (JSONException e){
+            Log.e("ERROR", "Error loading wheels...json");
+        }
+
+
+//        wheelList.add(new Wheel(new float[]{30,60,270}, new int[]{1, 2, 3}, new int[]{Color.RED, Color.BLUE, Color.GREEN}));
+//        wheelList.add(new Wheel(new float[]{10,90,260}, new int[]{4, 5, 6}, new int[]{Color.RED, Color.BLUE, Color.GREEN}));
+//        wheelList.add(new Wheel(new float[]{30,60,90, 90, 90}, new int[]{9, 10, 11, 12,13}, new int[]{Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.CYAN}));
+//        wheelList.add(new Wheel(new float[]{180,180}, new int[]{1, 2}, new int[]{Color.RED, Color.BLUE}));
 
         curWheelIndex = 0;
 
@@ -73,8 +130,93 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
         stageNum = 1;
 
         super.userID = getIntent().getStringExtra("USERID");
+        createUserParamsFile();
 
         super.setupUI(findViewById(android.R.id.content));
+    }
+
+    /**
+     * Store the user parameters in a file
+     */
+    protected void createUserParamsFile(){
+        //Check external storage available
+        if(!isExternalStorageWritable()){
+            Toast.makeText(this, "External Storage not writable. Exiting...", Toast.LENGTH_LONG).show();
+            finish();
+        }
+
+        int currentAPIVersion = Build.VERSION.SDK_INT;
+        File root;
+        if(currentAPIVersion >= Build.VERSION_CODES.KITKAT){ //Get API version because external storage is different depending
+            File[] dirs = ContextCompat.getExternalFilesDirs(this, null);
+            root = dirs[0];
+        }
+        else{
+            root = Environment.getExternalStorageDirectory();
+        }
+
+        //Check if file directory exists. If not, create it and check if it was created.
+        super.filePathParams = new File(root + "/UserParams");
+        if(!super.filePathParams.exists()){
+            boolean makeDir = super.filePathParams.mkdirs(); //Can't use this to check because it is false for both error and dir exists
+        }
+        if(!super.filePathParams.exists() || !super.filePathParams.isDirectory()){
+            Toast.makeText(this, "Error with creating directory. Exiting...", Toast.LENGTH_LONG).show();
+            finish();
+        }
+        String paramsFileName = super.userID;
+
+        String userParamsFileName = paramsFileName + "_PARAMS.txt";
+
+        //Create event logs
+        super.userParamsFile = new File(super.filePathParams, userParamsFileName);
+        if(!super.userParamsFile.exists()){
+            try{
+                FileOutputStream paramLogFileStream = new FileOutputStream(super.userParamsFile);
+                for(int i = 0; i < wheelList.size(); i = i + 2){
+                    StringBuilder column = new StringBuilder(); //first column
+
+                    StringBuilder colorColumn = new StringBuilder();
+                    colorColumn.append("\tColor\t");
+
+                    StringBuilder priceColumn = new StringBuilder();
+                    priceColumn.append("\tPrice\t");
+
+                    StringBuilder probColumn = new StringBuilder();
+                    probColumn.append("\tProbability\t");
+
+                    column.append("Task " + ((i / 2) + 1) + "\t"
+                            + "\t"
+                            + "Left");
+                    Wheel leftWheel = wheelList.get(i);
+                    for(int j = 0; j < leftWheel.getSiezeValue_degree(); j++){ //iterate through sections to allocate space
+                        column.append("\t");
+                        colorColumn.append(leftWheel.getColorNames()[j] + "\t");
+                        priceColumn.append(leftWheel.getScores()[j] + "\t");
+                        probColumn.append((leftWheel.getValue_degree()[j] / 360) + "\t");
+                    }
+
+                    column.append("Right");
+                    Wheel rightWheel = wheelList.get(i + 1);
+                    for(int j = 0; j < rightWheel.getSiezeValue_degree(); j++){
+                        column.append("\t");
+                        colorColumn.append(rightWheel.getColorNames()[j] + "\t");
+                        priceColumn.append(rightWheel.getScores()[j] + "\t");
+                        probColumn.append((rightWheel.getValue_degree()[j] / 360) + "\t");
+                    }
+                    column.append("\n");
+                    colorColumn.append("\n");
+                    priceColumn.append("\n");
+                    probColumn.append("\n");
+                    column.append(colorColumn).append(priceColumn).append(probColumn);
+                    paramLogFileStream.write(column.toString().getBytes());
+                }
+                paramLogFileStream.close();
+            } catch (Exception e){
+                Toast.makeText(this, "Error creating event file. Exiting...", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        }
     }
 
     @Override

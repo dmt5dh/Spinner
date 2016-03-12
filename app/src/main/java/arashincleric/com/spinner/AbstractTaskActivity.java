@@ -22,8 +22,10 @@ import java.util.Locale;
 public abstract class AbstractTaskActivity extends FragmentActivity {
 
     //File stuff here
-    protected File filePath;
+    protected File filePathLog;
+    protected File filePathParams;
     protected File eventLogFile;
+    protected File userParamsFile;
     public final static String EVENT_DATA_COLUMNS =
             "TabletID\tUserID\tDate\tTime\tStage\tAction\tResult\tOutcome\n";
     protected final static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -128,11 +130,11 @@ public abstract class AbstractTaskActivity extends FragmentActivity {
         }
 
         //Check if file directory exists. If not, create it and check if it was created.
-        filePath = new File(root + "/LogData");
-        if(!filePath.exists()){
-            boolean makeDir = filePath.mkdirs(); //Can't use this to check because it is false for both error and dir exists
+        filePathLog = new File(root + "/LogData");
+        if(!filePathLog.exists()){
+            boolean makeDir = filePathLog.mkdirs(); //Can't use this to check because it is false for both error and dir exists
         }
-        if(!filePath.exists() || !filePath.isDirectory()){
+        if(!filePathLog.exists() || !filePathLog.isDirectory()){
             Toast.makeText(this, "Error with creating directory. Exiting...", Toast.LENGTH_LONG).show();
             finish();
         }
@@ -142,7 +144,7 @@ public abstract class AbstractTaskActivity extends FragmentActivity {
 //        String userLogFileName = logFileName + "_USERS.txt";
 
         //Create event logs
-        eventLogFile = new File(filePath, eventLogFileName);
+        eventLogFile = new File(filePathLog, eventLogFileName);
         if(!eventLogFile.exists()){
             try{
                 FileOutputStream eventLogFileStream = new FileOutputStream(eventLogFile);
@@ -153,19 +155,6 @@ public abstract class AbstractTaskActivity extends FragmentActivity {
                 finish();
             }
         }
-
-//        //Create user logs
-//        userLogFile = new File(filePath, userLogFileName);
-//        if(!userLogFile.exists()){
-//            try{
-//                FileOutputStream userLogFileStream = new FileOutputStream(userLogFile);
-//                userLogFileStream.write(USER_DATA_COLUMNS.getBytes());
-//                userLogFileStream.close();
-//            } catch(Exception e){
-//                Toast.makeText(this, "Error creating user file. Exiting...", Toast.LENGTH_LONG).show();
-//                finish();
-//            }
-//        }
     }
 
     /**

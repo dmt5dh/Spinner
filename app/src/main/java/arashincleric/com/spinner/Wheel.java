@@ -19,9 +19,11 @@ public class Wheel implements Parcelable{
     private float[] value_degree;
     private int[] scores;
     private int[] COLORS;
+    private String[] colorNames;
     RectF rectf = new RectF (0, 0, 2000, 2000); //change this and below for better resolution
     float temp=0;
     private boolean isChosen;
+    Context context;
 
     public Wheel(){
     }
@@ -44,8 +46,35 @@ public class Wheel implements Parcelable{
         isChosen = false;
     }
 
+    public Wheel(Context context, float[] sections, int[] scores, String[] colorNames) {
+        this.context = context;
+
+        value_degree=new float[sections.length];
+        for(int i=0;i<sections.length;i++)
+        {
+            value_degree[i]=sections[i];
+        }
+
+        this.colorNames = colorNames;
+
+        COLORS = new int[colorNames.length];
+        for(int i=0;i<colorNames.length;i++)
+        {
+            int id = context.getResources().getIdentifier(colorNames[i], "color", context.getPackageName());
+            COLORS[i]=context.getResources().getColor(id);
+        }
+
+        this.scores = scores;
+
+        isChosen = false;
+    }
+
     public float[] getValue_degree(){
         return value_degree;
+    }
+
+    public int getSiezeValue_degree(){
+        return value_degree.length;
     }
 
     public int[] getScores(){
@@ -54,6 +83,10 @@ public class Wheel implements Parcelable{
 
     public int[] getCOLORS(){
         return COLORS;
+    }
+
+    public String[] getColorNames(){
+        return colorNames;
     }
 
     public void setChosen(boolean b){
