@@ -53,7 +53,7 @@ public class WheelView extends ImageView {
         int centerX = (int)(rectf.left + rectf.right) / 2;
         int centerY = (int)(rectf.top + rectf.bottom) / 2;
         int radius = (int)(rectf.right - rectf.left) / 2;
-        radius *= 0.5; // 1 will put the text in the border, 0 will put the text in the center. Play with this to set the distance of your text.
+        radius *= 0.6; // 1 will put the text in the border, 0 will put the text in the center. Play with this to set the distance of your text.
 
         paint.setTextSize(16);
         paint.setTextAlign(Paint.Align.CENTER);
@@ -136,7 +136,7 @@ public class WheelView extends ImageView {
         Canvas c = new Canvas(b);
         this.layout(0, 0, 2000, 2000); //Change to same value above
         rectf = new RectF (0, 0, 2000, 2000); //change this and below for better resolution
-        FONT_SIZE = 100f;
+        FONT_SIZE = 200f;
         this.draw(c);
         return b;
     }
@@ -146,7 +146,7 @@ public class WheelView extends ImageView {
         Canvas c = new Canvas(b);
         this.layout(0, 0, 300, 300); //Change to same value above
         rectf = new RectF (0, 0, 300, 300); //change this and below for better resolution
-        FONT_SIZE = 15f;
+        FONT_SIZE = 25f;
         this.draw(c);
         return b;
     }

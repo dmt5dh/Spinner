@@ -68,6 +68,7 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
 
         wheelList = new ArrayList<Wheel>();
 
+        //Read wheel data from JSON
         InputStream is = getResources().openRawResource(R.raw.wheel);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];

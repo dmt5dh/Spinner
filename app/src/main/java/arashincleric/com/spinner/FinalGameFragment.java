@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import org.w3c.dom.Text;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,17 +69,24 @@ public class FinalGameFragment extends TaskFragment {
 
         super.confirmBtn.setVisibility(View.GONE);
 
+        int id = getContext().getResources().getIdentifier("GREY", "color", getContext().getPackageName());
+        int colorId =getContext().getResources().getColor(id);
+
         if(super.wLeft.getWheelObject().isChosen()){
             super.rightScoreView.setVisibility(View.GONE);
             super.rightSpinBtn.setVisibility(View.GONE);
+            TextView rightCheckBoxInst = (TextView)view.findViewById(R.id.checkBoxInstRight);
+            rightCheckBoxInst.setVisibility(View.GONE);
             rightWheel.setEnabled(false);
-            rightWheel.setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+            rightWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY);
         }
         else{
             super.leftScoreView.setVisibility(View.GONE);
             super.leftSpinBtn.setVisibility(View.GONE);
+            TextView leftCheckBoxInst = (TextView)view.findViewById(R.id.checkBoxInstLeft);
+            leftCheckBoxInst.setVisibility(View.GONE);
             leftWheel.setEnabled(false);
-            leftWheel.setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+            leftWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY);
         }
     }
 

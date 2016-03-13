@@ -68,12 +68,15 @@ public class WheelListAdapter  extends BaseAdapter implements ListAdapter{
         leftWheel.setImageBitmap(new WheelView(context, wheelTuple.left).getBitmapReduced());
         rightWheel.setImageBitmap(new WheelView(context, wheelTuple.right).getBitmapReduced());
 
+        int id = context.getResources().getIdentifier("GREY", "color", context.getPackageName());
+        int colorId=context.getResources().getColor(id);
+
         if(!wheelTuple.left.isChosen()){
-            leftWheel.setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY); //TODO:TWEAK THIS TO DIM(Multiply)
+            leftWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY); //TODO:TWEAK THIS TO DIM(Multiply)
             rightCheckBox.setChecked(true);
         }
         else{
-            rightWheel.setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY); //TODO:TWEAK THIS TO DIM(Multiply)
+            rightWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY); //TODO:TWEAK THIS TO DIM(Multiply)
             leftCheckBox.setChecked(true);
         }
 

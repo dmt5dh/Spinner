@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/spin_btn"
                     android:id="@+id/leftSpinBtn"
-                    android:layout_centerVertical="true"
+                    android:layout_below="@+id/leftScore"
                     android:layout_centerHorizontal="true" />
 
                 <CheckBox
@@ -73,6 +73,14 @@
                     android:textOff="@string/select_btn"
                     android:textOn="@string/select_btn"
                     android:id="@+id/leftSelectBtn"
+                    android:layout_above="@+id/checkBoxInstLeft"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkbox_instruction"
+                    android:id="@+id/checkBoxInstLeft"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true" />
             </RelativeLayout>
@@ -129,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/spin_btn"
                     android:id="@+id/rightSpinBtn"
-                    android:layout_centerVertical="true"
+                    android:layout_below="@+id/rightScore"
                     android:layout_centerHorizontal="true" />
 
                 <CheckBox
@@ -138,6 +146,14 @@
                     android:textOff="@string/select_btn"
                     android:textOn="@string/select_btn"
                     android:id="@+id/rightSelectBtn"
+                    android:layout_above="@+id/checkBoxInstRight"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkbox_instruction"
+                    android:id="@+id/checkBoxInstRight"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true" />
             </RelativeLayout>
