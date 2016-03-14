@@ -7,7 +7,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -15,6 +18,7 @@ public class FinalGameActivity extends AbstractTaskActivity implements FinalGame
 
     ArrayList<Wheel> wheelList;
     String userID;
+    int gameNum;
 
     Fragment mContent;
     FragmentManager fragmentManager;
@@ -26,12 +30,16 @@ public class FinalGameActivity extends AbstractTaskActivity implements FinalGame
         Intent intent = getIntent();
         wheelList = intent.getParcelableArrayListExtra("WHEELLIST");
         userID = intent.getStringExtra("USERNAME");
+        gameNum = intent.getIntExtra("GAMENUM", 0);
+
+        TextView gameNumText = (TextView)findViewById(R.id.gameNumberText);
+        gameNumText.setText(Integer.toString(gameNum));
 
         fragmentManager = getSupportFragmentManager();
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.disallowAddToBackStack();
-        mContent = FinalGameFragment.newInstance();
+        mContent = FinalGameFragment.newInstance(gameNum);
         transaction.add(R.id.fragmentContainer, mContent).commit();
     }
 

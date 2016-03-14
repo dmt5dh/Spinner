@@ -75,5 +75,88 @@
         "BLUE"
       ]
     }
+  },
+  {
+    "wheel":{
+      "sections": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "pricelist":[
+        10,
+        10,
+        10,
+        10,
+        10,
+        10
+      ],
+      "colorlist":[
+        "RED",
+        "BLUE",
+        "RED",
+        "BLUE",
+        "RED",
+        "BLUE"
+      ]
+    }
+  },
+  {
+    "wheel":{
+      "sections": [
+        72,
+        72,
+        72,
+        72,
+        72
+      ],
+      "pricelist":[
+        0,
+        2,
+        9,
+        100,
+        2
+      ],
+      "colorlist":[
+        "PURPLE",
+        "PINK",
+        "BLUE",
+        "YELLOW",
+        "ORANGE"
+      ]
+    }
+  },
+  {
+    "wheel":{
+      "sections": [
+        360
+      ],
+      "pricelist":[
+        10
+      ],
+      "colorlist":[
+        "PURPLE"
+      ]
+    }
+  },
+  {
+    "wheel":{
+      "sections": [
+        180,
+        180
+      ],
+      "pricelist":[
+        1000,
+        0
+      ],
+      "colorlist":[
+        "PURPLE",
+        "PINK"
+      ]
+    }
   }
+
 ]

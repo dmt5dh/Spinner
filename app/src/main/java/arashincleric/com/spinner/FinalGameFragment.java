@@ -34,7 +34,7 @@ import org.w3c.dom.Text;
  */
 public class FinalGameFragment extends TaskFragment {
 
-    public static FinalGameFragment newInstance() {
+    public static FinalGameFragment newInstance(int gameNum) {
         FinalGameFragment fragment = new FinalGameFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -89,7 +89,6 @@ public class FinalGameFragment extends TaskFragment {
             leftWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY);
         }
     }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

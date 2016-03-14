@@ -46,7 +46,7 @@ public class WheelListAdapter  extends BaseAdapter implements ListAdapter{
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent){
-        View view = convertView;
+        View view = null;
         if(view == null){ //If view not inflated, inflate it
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.wheel_list_item, null);
@@ -81,5 +81,10 @@ public class WheelListAdapter  extends BaseAdapter implements ListAdapter{
         }
 
         return view;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
     }
 }
