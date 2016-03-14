@@ -1,6 +1,7 @@
 package arashincleric.com.spinner;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -10,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -111,5 +113,52 @@ public class PracticeActivity extends AbstractTaskActivity implements
     @Override
     public void fullScreen(){
         super.turnFullScreen();
+    }
+
+    @Override
+    public void showConfirmation(){
+        TaskFragment currentTask = (TaskFragment)mContent;
+        final boolean isLeftSelected = currentTask.isLeftSelectBtnChecked();
+        boolean isRightSelected = currentTask.isRightSelectBtnChecked();
+
+        if (!isLeftSelected && !isRightSelected) {
+            logEventTask("Clicked continue", "Practice task not resolved", "-");
+            new AlertDialog.Builder(this)
+                    .setMessage(R.string.no_checks)
+                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            turnFullScreen();
+                        }
+                    })
+                    .setNeutralButton(R.string.cancel_btn, null)
+                    .show();
+        } else {
+            //LOG: log confirmation screen click
+            logEventTask("Clicked continue", "Practice task resolution", "-");
+            new AlertDialog.Builder(this)
+                    .setMessage(R.string.confirm_wheel_msg_practice2)
+                    .setPositiveButton(R.string.confirm_wheel_msg_practice_yes, new DialogInterface.OnClickListener() { //LOG: log confirm click
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            logEventTask("Confirm continue", "Practice task resolution", "-");
+                            nextScreen(isLeftSelected);
+                        }
+                    })
+                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            turnFullScreen();
+                        }
+                    })
+                    .setNegativeButton(R.string.confirm_wheel_msg_practice_cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //LOG: log cancel click
+                            logEventTask("Cancel continue", "Practice task resolution", "-");
+                        }
+                    })
+                    .show();
+        }
     }
 }

@@ -19,6 +19,9 @@
     <string name="no_checks">Please select a wheel</string>
     <string name="confirm_wheel_msg">Are you sure?</string>
     <string name="confirm_wheel_msg_practice">Done playing?</string>
+    <string name="confirm_wheel_msg_practice2">Do you want to continue and start the tasks or continue practicing?</string>
+    <string name="confirm_wheel_msg_practice_yes">Yes, start tasks</string>
+    <string name="confirm_wheel_msg_practice_cancel">No, practice more</string>
     <string name="yes_confirm">Yes</string>
     <string name="left_score">Outcome: %1$s</string>
     <string name="right_score">Outcome: %1$s</string>

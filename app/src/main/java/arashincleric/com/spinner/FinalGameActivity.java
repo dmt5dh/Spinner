@@ -66,4 +66,9 @@ public class FinalGameActivity extends AbstractTaskActivity implements FinalGame
         //TODO: freeze everything on final game fragment
         Toast.makeText(this, "completed", Toast.LENGTH_SHORT).show(); //This is for all events so just check for rotation complete
     }
+
+    @Override
+    public void showConfirmation(){
+        //Do nothing
+    }
 }

@@ -244,45 +244,46 @@ public class TaskFragment extends Fragment {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!leftSelectBtn.isChecked() && !rightSelectBtn.isChecked()) {
-                    mListener.logEventTask("Clicked continue", "Practice task not resolved", "-");
-                    new AlertDialog.Builder(v.getContext())
-                            .setMessage(R.string.no_checks)
-                            .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialog) {
-                                    mListener.fullScreen();
-                                }
-                            })
-                            .setNeutralButton(R.string.cancel_btn, null)
-                            .show();
-                } else {
-                    //LOG: log confirmation screen click
-                    mListener.logEventTask("Clicked continue", "Practice task resolution", "-");
-                    new AlertDialog.Builder(v.getContext())
-                            .setMessage(R.string.confirm_wheel_msg)
-                            .setPositiveButton(R.string.yes_confirm, new DialogInterface.OnClickListener() { //LOG: log confirm click
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    mListener.logEventTask("Confirm continue", "Practice task resolution", "-");
-                                    mListener.nextScreen(leftSelectBtn.isChecked());
-                                }
-                            })
-                            .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialog) {
-                                    mListener.fullScreen();
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    //LOG: log cancel click
-                                    mListener.logEventTask("Cancel continue", "Practice task resolution", "-");
-                                }
-                            })
-                            .show();
-                }
+                mListener.showConfirmation();
+//                if (!leftSelectBtn.isChecked() && !rightSelectBtn.isChecked()) {
+//                    mListener.logEventTask("Clicked continue", "Practice task not resolved", "-");
+//                    new AlertDialog.Builder(v.getContext())
+//                            .setMessage(R.string.no_checks)
+//                            .setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                                @Override
+//                                public void onDismiss(DialogInterface dialog) {
+//                                    mListener.fullScreen();
+//                                }
+//                            })
+//                            .setNeutralButton(R.string.cancel_btn, null)
+//                            .show();
+//                } else {
+//                    //LOG: log confirmation screen click
+//                    mListener.logEventTask("Clicked continue", "Practice task resolution", "-");
+//                    new AlertDialog.Builder(v.getContext())
+//                            .setMessage(R.string.confirm_wheel_msg)
+//                            .setPositiveButton(R.string.yes_confirm, new DialogInterface.OnClickListener() { //LOG: log confirm click
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    mListener.logEventTask("Confirm continue", "Practice task resolution", "-");
+//                                    mListener.nextScreen(leftSelectBtn.isChecked());
+//                                }
+//                            })
+//                            .setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                                @Override
+//                                public void onDismiss(DialogInterface dialog) {
+//                                    mListener.fullScreen();
+//                                }
+//                            })
+//                            .setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    //LOG: log cancel click
+//                                    mListener.logEventTask("Cancel continue", "Practice task resolution", "-");
+//                                }
+//                            })
+//                            .show();
+//                }
             }
         });
 
@@ -346,6 +347,14 @@ public class TaskFragment extends Fragment {
         } else {
             return y >= 0 ? 2 : 3;
         }
+    }
+
+    public boolean isLeftSelectBtnChecked(){
+        return leftSelectBtn.isChecked();
+    }
+
+    public boolean isRightSelectBtnChecked(){
+        return rightSelectBtn.isChecked();
     }
 
     /**
@@ -695,6 +704,7 @@ public class TaskFragment extends Fragment {
         public void nextScreen(boolean isLeftSelected);
         public void fullScreen();
         public void logEventTask(String action, String result, String outcome);
+        public void showConfirmation();
     }
 
 }

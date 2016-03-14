@@ -72,21 +72,57 @@ public class FinalGameFragment extends TaskFragment {
         int id = getContext().getResources().getIdentifier("GREY", "color", getContext().getPackageName());
         int colorId =getContext().getResources().getColor(id);
 
+        TextView leftCheckBoxInst = (TextView)view.findViewById(R.id.checkBoxInstLeft);
+        leftCheckBoxInst.setVisibility(View.GONE);
+        TextView rightCheckBoxInst = (TextView)view.findViewById(R.id.checkBoxInstRight);
+        rightCheckBoxInst.setVisibility(View.GONE);
+
         if(super.wLeft.getWheelObject().isChosen()){
             super.rightScoreView.setVisibility(View.GONE);
             super.rightSpinBtn.setVisibility(View.GONE);
-            TextView rightCheckBoxInst = (TextView)view.findViewById(R.id.checkBoxInstRight);
-            rightCheckBoxInst.setVisibility(View.GONE);
             rightWheel.setEnabled(false);
             rightWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY);
+
+            super.leftSpinBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (allowRotatingLeft) {
+                        //LOG: log left click
+                        mListener.logEventTask("Chosen Game", "Spun spinner", "-");
+                        startTheSpinWithDirection("normal", 1000, true);
+                    }
+                    deactivateSpin(true);
+
+                }
+            });
         }
         else{
             super.leftScoreView.setVisibility(View.GONE);
             super.leftSpinBtn.setVisibility(View.GONE);
-            TextView leftCheckBoxInst = (TextView)view.findViewById(R.id.checkBoxInstLeft);
-            leftCheckBoxInst.setVisibility(View.GONE);
             leftWheel.setEnabled(false);
             leftWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY);
+
+            super.rightSpinBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (allowRotatingRight) {
+                        //LOG: log right click
+                        mListener.logEventTask("Chosen Game", "Spun spinner", "-");
+                        startTheSpinWithDirection("normal", 1000, false);
+                    }
+                    deactivateSpin(false);
+                }
+            });
+        }
+    }
+
+    public void deactivateSpin(boolean isLeft){
+
+        if(isLeft){
+            leftSpinBtn.setEnabled(false);
+        }
+        else{
+            rightSpinBtn.setEnabled(false);
         }
     }
     /**
