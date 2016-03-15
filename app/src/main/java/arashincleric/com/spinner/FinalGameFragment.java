@@ -116,13 +116,16 @@ public class FinalGameFragment extends TaskFragment {
         }
     }
 
+    //Not needed but put here just in case...
     public void deactivateSpin(boolean isLeft){
 
         if(isLeft){
             leftSpinBtn.setEnabled(false);
+            super.leftWheel.setOnTouchListener(null);
         }
         else{
             rightSpinBtn.setEnabled(false);
+            super.rightWheel.setOnTouchListener(null);
         }
     }
     /**

@@ -67,6 +67,8 @@ public class TaskFragment extends Fragment {
     protected Runnable flingRunnableLeft;
     protected Runnable flingRunnableRight;
 
+    private boolean isFinal;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -331,6 +333,13 @@ public class TaskFragment extends Fragment {
             throw new ClassCastException(context.toString()
                     + " must implement OnTaskFragmentInteractionListener");
         }
+
+        if(context instanceof FinalGameActivity){
+            isFinal = true;
+        }
+        else{
+            isFinal = false;
+        }
     }
 
     @Override
@@ -382,11 +391,11 @@ public class TaskFragment extends Fragment {
 
             //start the runnable process
             if (isLeft) {
-                leftSpinBtn.setClickable(false);
+                leftSpinBtn.setEnabled(false);
                 flingRunnableLeft = new FlingRunnable(direct * velocity, true);
                 leftWheel.post(flingRunnableLeft);
             } else {
-                rightSpinBtn.setClickable(false);
+                rightSpinBtn.setEnabled(false);
                 flingRunnableRight = new FlingRunnable(direct * velocity, false);
                 rightWheel.post(flingRunnableRight);
             }
@@ -663,9 +672,11 @@ public class TaskFragment extends Fragment {
                     String leftScoreRecord = Integer.toString(wLeft.getRewardFromWheelAngle(matrixLeft));
                     mListener.logEventTask("Experimenting", "Left finished spinning", leftScoreRecord);
                     leftScoreView.setText(String.format(leftScore, leftScoreRecord));
-                    allowRotatingLeft = true;
-                    leftWheel.setEnabled(true);
-                    leftSpinBtn.setClickable(true);
+                    if(!isFinal){
+                        allowRotatingLeft = true;
+                        leftWheel.setEnabled(true);
+                        leftSpinBtn.setEnabled(true);
+                    }
                 }
                 else{
                     //LOG: log score right
@@ -673,9 +684,11 @@ public class TaskFragment extends Fragment {
                     String rightScoreRecord = Integer.toString(wRight.getRewardFromWheelAngle(matrixRight));
                     mListener.logEventTask("Experimenting", "Right finished spinning", rightScoreRecord);
                     rightScoreView.setText(String.format(rightScore, rightScoreRecord));
-                    allowRotatingRight = true;
-                    rightWheel.setEnabled(true);
-                    rightSpinBtn.setClickable(true);
+                    if(!isFinal){
+                        allowRotatingRight = true;
+                        rightWheel.setEnabled(true);
+                        rightSpinBtn.setEnabled(true);
+                    }
                 }
 
             }
