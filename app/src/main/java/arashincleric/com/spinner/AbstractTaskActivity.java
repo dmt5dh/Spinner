@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,21 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -190,5 +203,56 @@ public abstract class AbstractTaskActivity extends FragmentActivity {
                 + outcome + "\n";
 
         writeToFile(eventLogFile, dataToSave);
+    }
+
+    public ArrayList<Wheel> initializeWheelList(boolean isPractice){
+        //Read wheel data from JSON
+        InputStream is;
+        if(isPractice){
+            is = getResources().openRawResource(R.raw.practice);
+        }
+        else{
+            is = getResources().openRawResource(R.raw.task);
+        }
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
+        try{
+            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            int n;
+            while ((n = reader.read(buffer)) != -1){
+                writer.write(buffer, 0, n);
+            }
+            is.close();
+        }
+        catch (IOException e){
+            Log.e("ERROR", "Error loading wheels");
+        }
+
+        ArrayList<Wheel> wheelList = new ArrayList<Wheel>();
+        String json = writer.toString();
+        try{
+            JSONArray jsonArray = new JSONArray(json);
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject jsonWheel = jsonArray.getJSONObject(i).getJSONObject("wheel");
+                JSONArray sectionsJsonArray = jsonWheel.getJSONArray("sections");
+                JSONArray priceJsonArray = jsonWheel.getJSONArray("pricelist");
+                JSONArray colorJsonList = jsonWheel.getJSONArray("colorlist");
+
+                float[] sectionsArray = new float[sectionsJsonArray.length()];
+                int[] priceArray = new int[sectionsJsonArray.length()];
+                String[] colorArray = new String[sectionsJsonArray.length()];
+                for(int j = 0; j < sectionsJsonArray.length(); j++){
+                    sectionsArray[j] = (float)((int)sectionsJsonArray.get(j) / 1.0); //To convert int to float
+                    priceArray[j] = (int)priceJsonArray.get(j);
+                    colorArray[j] = (String)colorJsonList.get(j);
+                }
+                wheelList.add(new Wheel(this, sectionsArray, priceArray, colorArray));
+            }
+        }
+        catch (JSONException e){
+            Log.e("ERROR", "Error loading wheels...json");
+        }
+
+        return wheelList;
     }
 }

@@ -69,47 +69,47 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
-        wheelList = new ArrayList<Wheel>();
+        wheelList = super.initializeWheelList(false);
 
-        //Read wheel data from JSON
-        InputStream is = getResources().openRawResource(R.raw.wheel);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-        try{
-            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            int n;
-            while ((n = reader.read(buffer)) != -1){
-                writer.write(buffer, 0, n);
-            }
-            is.close();
-        }
-        catch (IOException e){
-            Log.e("ERROR", "Error loading wheels");
-        }
-
-        String json = writer.toString();
-        try{
-            JSONArray jsonArray = new JSONArray(json);
-            for(int i = 0; i < jsonArray.length(); i++){
-                JSONObject jsonWheel = jsonArray.getJSONObject(i).getJSONObject("wheel");
-                JSONArray sectionsJsonArray = jsonWheel.getJSONArray("sections");
-                JSONArray priceJsonArray = jsonWheel.getJSONArray("pricelist");
-                JSONArray colorJsonList = jsonWheel.getJSONArray("colorlist");
-
-                float[] sectionsArray = new float[sectionsJsonArray.length()];
-                int[] priceArray = new int[sectionsJsonArray.length()];
-                String[] colorArray = new String[sectionsJsonArray.length()];
-                for(int j = 0; j < sectionsJsonArray.length(); j++){
-                    sectionsArray[j] = (float)((int)sectionsJsonArray.get(j) / 1.0); //To convert int to float
-                    priceArray[j] = (int)priceJsonArray.get(j);
-                    colorArray[j] = (String)colorJsonList.get(j);
-                }
-                wheelList.add(new Wheel(this, sectionsArray, priceArray, colorArray));
-            }
-        }
-        catch (JSONException e){
-            Log.e("ERROR", "Error loading wheels...json");
-        }
+//        //Read wheel data from JSON
+//        InputStream is = getResources().openRawResource(R.raw.wheel);
+//        Writer writer = new StringWriter();
+//        char[] buffer = new char[1024];
+//        try{
+//            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+//            int n;
+//            while ((n = reader.read(buffer)) != -1){
+//                writer.write(buffer, 0, n);
+//            }
+//            is.close();
+//        }
+//        catch (IOException e){
+//            Log.e("ERROR", "Error loading wheels");
+//        }
+//
+//        String json = writer.toString();
+//        try{
+//            JSONArray jsonArray = new JSONArray(json);
+//            for(int i = 0; i < jsonArray.length(); i++){
+//                JSONObject jsonWheel = jsonArray.getJSONObject(i).getJSONObject("wheel");
+//                JSONArray sectionsJsonArray = jsonWheel.getJSONArray("sections");
+//                JSONArray priceJsonArray = jsonWheel.getJSONArray("pricelist");
+//                JSONArray colorJsonList = jsonWheel.getJSONArray("colorlist");
+//
+//                float[] sectionsArray = new float[sectionsJsonArray.length()];
+//                int[] priceArray = new int[sectionsJsonArray.length()];
+//                String[] colorArray = new String[sectionsJsonArray.length()];
+//                for(int j = 0; j < sectionsJsonArray.length(); j++){
+//                    sectionsArray[j] = (float)((int)sectionsJsonArray.get(j) / 1.0); //To convert int to float
+//                    priceArray[j] = (int)priceJsonArray.get(j);
+//                    colorArray[j] = (String)colorJsonList.get(j);
+//                }
+//                wheelList.add(new Wheel(this, sectionsArray, priceArray, colorArray));
+//            }
+//        }
+//        catch (JSONException e){
+//            Log.e("ERROR", "Error loading wheels...json");
+//        }
 
 
 //        wheelList.add(new Wheel(new float[]{30,60,270}, new int[]{1, 2, 3}, new int[]{Color.RED, Color.BLUE, Color.GREEN}));

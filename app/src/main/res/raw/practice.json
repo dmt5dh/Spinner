@@ -1,0 +1,57 @@
+[
+  {
+    "wheel":{
+      "sections":[
+        180,
+        180
+      ],
+      "pricelist":[
+        1,
+        2
+      ],
+      "colorlist":[
+        "ORANGE",
+        "BLUE"
+      ]
+    }
+  },
+  {
+    "wheel":{
+      "sections": [
+        180,
+        180
+      ],
+      "pricelist":[
+        1,
+        2
+      ],
+      "colorlist":[
+        "RED",
+        "BLUE"
+      ]
+    }
+  },
+  {
+    "wheel":{
+      "sections": [
+        90,
+        90,
+        90,
+        90
+      ],
+      "pricelist":[
+        1,
+        2,
+        3,
+        4
+      ],
+      "colorlist":[
+        "RED",
+        "YELLOW",
+        "ORANGE",
+        "CYAN"
+
+      ]
+    }
+  }
+]

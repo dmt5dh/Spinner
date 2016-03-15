@@ -37,9 +37,9 @@ public class PracticeActivity extends AbstractTaskActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice);
 
-        wheelList = new ArrayList<Wheel>();
-        wheelList.add(new Wheel(new float[]{180, 180}, new int[]{1,2}, new int[]{Color.RED, Color.BLUE}));
-        wheelList.add(new Wheel(new float[]{90,90,90,90}, new int[]{4, 5, 6, 7}, new int[]{Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW}));
+        wheelList = super.initializeWheelList(true);
+//        wheelList.add(new Wheel(new float[]{180, 180}, new int[]{1,2}, new int[]{Color.RED, Color.BLUE}));
+//        wheelList.add(new Wheel(new float[]{90,90,90,90}, new int[]{4, 5, 6, 7}, new int[]{Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW}));
 
         super.userID = getIntent().getStringExtra("USERID");
 
@@ -54,7 +54,11 @@ public class PracticeActivity extends AbstractTaskActivity implements
 
     @Override
     public Wheel getWheelFromListSingle(){
-        return wheelList.get(0);
+        Wheel w = wheelList.get(0);
+        if(wheelList.size() > 1){
+            wheelList.remove(0);
+        }
+        return w;
     }
 
     @Override
