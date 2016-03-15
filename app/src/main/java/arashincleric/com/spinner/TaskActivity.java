@@ -168,7 +168,8 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
             Toast.makeText(this, "Error with creating directory. Exiting...", Toast.LENGTH_LONG).show();
             finish();
         }
-        String paramsFileName = super.userID;
+        String paramsFileName = super.userID + dateTimeFormat.format(Calendar.getInstance().getTime()
+        );
 
         String userParamsFileName = paramsFileName + "_PARAMS.txt";
 

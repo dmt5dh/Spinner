@@ -30,6 +30,7 @@ public abstract class AbstractTaskActivity extends FragmentActivity {
             "TabletID\tUserID\tDate\tTime\tStage\tAction\tResult\tOutcome\n";
     protected final static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     protected final static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss.SSS", Locale.US);
+    protected final static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HHmm", Locale.US);
     protected String userID;
 
     @Override
