@@ -131,6 +131,7 @@ public class WheelListActivity extends ListActivity {
             intent.putExtra("USERNAME", userID);
             intent.putExtra("GAMENUM", gameSelectionIndex + 1);
             startActivity(intent);
+            finish();
 
         } catch (Exception e) {
             Log.e("ERROR", "Error logging summary showing");

@@ -6,32 +6,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:keepScreenOn="true"
-    tools:context="arashincleric.com.spinner.FinalGameActivity">
-
-    <FrameLayout
-        android:id="@+id/fragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".FinalGameActivity"
-        android:layout_below="@+id/finalGameTitle"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/gameNumberText"
-            android:layout_gravity="start|top" />
-    </FrameLayout>
+    tools:context="arashincleric.com.spinner.FinishTaskActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/final_game_title"
-        android:id="@+id/finalGameTitle"
+        android:id="@+id/completeMsg"
+        android:textSize="35sp"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/finish_btn"
+        android:id="@+id/finishBtn"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

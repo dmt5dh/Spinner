@@ -280,6 +280,7 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
             intent.putExtra("USERID", userID);
 
             startActivity(intent);
+            finish();
         }
     }
 

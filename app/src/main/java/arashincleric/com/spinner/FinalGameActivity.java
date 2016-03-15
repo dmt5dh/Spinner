@@ -21,6 +21,7 @@ public class FinalGameActivity extends AbstractTaskActivity implements FinalGame
 
     ArrayList<Wheel> wheelList;
     int gameNum;
+    int score;
 
     Fragment mContent;
     FragmentManager fragmentManager;
@@ -54,7 +55,11 @@ public class FinalGameActivity extends AbstractTaskActivity implements FinalGame
 
     @Override
     public void nextScreen(boolean isLeftSelected){
-        //Do nothing
+        Intent intent = new Intent(FinalGameActivity.this, QuestionnaireActivity.class);
+        intent.putExtra("USERNAME", userID);
+        intent.putExtra("SCORE", score);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -73,17 +78,8 @@ public class FinalGameActivity extends AbstractTaskActivity implements FinalGame
         }
 
         if(!outcome.equals("-") && !outcome.isEmpty()){
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //TODO: finish everything here
-                    Intent intent = new Intent(FinalGameActivity.this, QuestionnaireActivity.class);
-                    intent.putExtra("USERNAME", userID);
-                    intent.putExtra("SCORE", outcome);
-                    startActivity(intent);
-                }
-            }, 3000);
+            score = Integer.parseInt(outcome);
+            ((FinalGameFragment)mContent).enableConfirmBtn();
         }
 
     }

@@ -59,7 +59,13 @@ public class FinalGameFragment extends TaskFragment {
         super.leftSelectBtn.setVisibility(View.GONE);
         super.rightSelectBtn.setVisibility(View.GONE);
 
-        super.confirmBtn.setVisibility(View.GONE);
+        super.confirmBtn.setEnabled(false);
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.nextScreen(true);
+            }
+        });
 
         int id = getContext().getResources().getIdentifier("GREY", "color", getContext().getPackageName());
         int colorId =getContext().getResources().getColor(id);
@@ -119,6 +125,10 @@ public class FinalGameFragment extends TaskFragment {
             rightSpinBtn.setEnabled(false);
             super.rightWheel.setOnTouchListener(null);
         }
+    }
+
+    public void enableConfirmBtn(){
+        confirmBtn.setEnabled(true);
     }
 
 }

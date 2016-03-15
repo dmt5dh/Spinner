@@ -113,12 +113,11 @@ public class QuestionnaireActivity extends AbstractTaskActivity {
                 boolean success = createQuestionnaireFile();
 
                 if (success) {
-//                    Intent intent = new Intent(QuestionnaireActivity.this, TaskCompleteScreen.class);
-//                    intent.putExtra("USERNAME", getIntent().getStringExtra("USERNAME"));
-//                    intent.putExtra("POINTS", getIntent().getDoubleExtra("POINTS", 0));
-//                    startActivity(intent);
-//                    finish();
-                    Toast.makeText(QuestionnaireActivity.this,"finish",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(QuestionnaireActivity.this, FinishTaskActivity.class);
+                    intent.putExtra("USERNAME", getIntent().getStringExtra("USERNAME"));
+                    intent.putExtra("SCORE", getIntent().getIntExtra("SCORE", 0));
+                    startActivity(intent);
+                    finish();
                 }
             }
         });

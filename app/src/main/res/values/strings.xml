@@ -37,5 +37,8 @@
     <string name="start_task_text">Now, choose spinners for real</string>
     <string name="questionnaire_alert">Please fill out all fields</string>
     <string name="answer_hint">Type answer here</string>
+    <string name="complete_msg">Thank you for playing! Your score is: %1$d</string>
+    <string name="finish_btn">FINISH</string>
+    <string name="final_game_title">Final Game</string>
 
 </resources>
