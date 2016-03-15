@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -24,7 +25,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends FragmentActivity {
+import java.util.Calendar;
+
+public class MainActivity extends AbstractTaskActivity {
 
     private String userEmail;
 
@@ -64,6 +67,17 @@ public class MainActivity extends FragmentActivity {
                 //TODO: do confirmation here later
                 int validated = validateEntries();
                 if(validated == 0){
+                    try{
+                        logEvent(Calendar.getInstance(), "Login",
+                                "Entered information",
+                                "Name: " + nameEntry.getText().toString() + ", "
+                                        + "Admin: " + adminEntry.getText().toString() + ", "
+                                        + "Location: " + locationEntry.getText().toString(),
+                                "-");
+                    }
+                    catch (Exception e){
+                        Log.e("ERROR", "Error writing login information to file");
+                    }
                     Intent intent = new Intent(MainActivity.this, PracticeActivity.class);
                     intent.putExtra("USERID", idEntry.getText().toString());
                     startActivity(intent);
@@ -96,6 +110,7 @@ public class MainActivity extends FragmentActivity {
                 && !adminEntry.getText().toString().isEmpty()
                 && !locationEntry.getText().toString().isEmpty()){
             validateResult = 0;
+            super.userID = idEntry.getText().toString();
         }
         return validateResult;
     }

@@ -94,6 +94,11 @@ public class PracticeActivity extends AbstractTaskActivity implements
 
     @Override
     public void nextScreen(boolean isLeftSelected){
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.disallowAddToBackStack();
+        transaction.remove(mContent).commit();
+        fragmentManager.executePendingTransactions();
+
         Intent intent = new Intent(PracticeActivity.this, TaskActivity.class);
         intent.putExtra("USERID", userID);
         startActivity(intent);

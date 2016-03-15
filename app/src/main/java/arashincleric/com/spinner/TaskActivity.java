@@ -47,7 +47,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Random;
 
-public class TaskActivity extends AbstractTaskActivity implements TaskFragment.OnTaskFragmentInteractionListener{
+public class TaskActivity extends AbstractTaskActivity implements TaskFragment.OnTaskFragmentInteractionListener,
+        StartTaskFragment.OnStartTaskFragmentInteractionListener{
 
     /** PARAMETERS TO CHANGE**/
     boolean randomizeList = true;
@@ -127,7 +128,7 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.disallowAddToBackStack();
-        mContent = TaskFragment.newInstance();
+        mContent = StartTaskFragment.newInstance();
         transaction.add(R.id.fragmentContainer, mContent).commit();
 
         stageNum = 1;
@@ -261,6 +262,11 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
             stageNum++;
         }
         else{
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.disallowAddToBackStack();
+            transaction.remove(mContent).commit();
+            fragmentManager.executePendingTransactions();
+
             Intent intent = new Intent(TaskActivity.this, WheelListActivity.class);
             for(int i = 0; i < wheelList.size(); i++){
                 if(selected.get(i)){
@@ -336,6 +342,14 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
                     })
                     .show();
         }
+    }
+
+    @Override
+    public void startTasks(){
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.disallowAddToBackStack();
+        mContent = TaskFragment.newInstance();
+        transaction.replace(R.id.fragmentContainer, mContent).commit();
     }
 
 }

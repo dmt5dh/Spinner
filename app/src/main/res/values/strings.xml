@@ -34,6 +34,7 @@
     <string name="checkbox_instruction">TAP TO SELECT</string>
     <string name="choose_random_btn">CHOOSE RANDOM</string>
     <string name="summary_screen_title">Summary of Decisions</string>
+    <string name="start_task_text">Now, choose spinners for real</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
