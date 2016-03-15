@@ -223,7 +223,7 @@ public class TaskFragment extends Fragment {
                     mListener.logEventTask("Choice", "Chose left", "-");
                 }
                 else{
-                    //TODO: log uncheck left
+                    //TODO: log uncheck left?
                 }
             }
         });
@@ -237,7 +237,7 @@ public class TaskFragment extends Fragment {
                     mListener.logEventTask("Choice", "Chose right", "-");
                 }
                 else{
-                    //TODO: log uncheck right
+                    //TODO: log uncheck right?
                 }
             }
         });

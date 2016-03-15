@@ -3,6 +3,7 @@ package arashincleric.com.spinner;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -62,7 +63,7 @@ public class FinalGameActivity extends AbstractTaskActivity implements FinalGame
     }
 
     @Override
-    public void logEventTask(String action, String result, String outcome){
+    public void logEventTask(String action, String result, final String outcome){
         //LOG: log the score for the player here
         try{
             logEvent(Calendar.getInstance(), "Payment", "Game " + gameNum, result, outcome);
@@ -70,7 +71,21 @@ public class FinalGameActivity extends AbstractTaskActivity implements FinalGame
         catch (Exception e){
             Log.e("ERROR", "Error logging payment data");
         }
-        Toast.makeText(this, "completed", Toast.LENGTH_SHORT).show(); //This is for all events so just check for rotation complete
+
+        if(!outcome.equals("-") && !outcome.isEmpty()){
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //TODO: finish everything here
+                    Intent intent = new Intent(FinalGameActivity.this, QuestionnaireActivity.class);
+                    intent.putExtra("USERNAME", userID);
+                    intent.putExtra("SCORE", outcome);
+                    startActivity(intent);
+                }
+            }, 3000);
+        }
+
     }
 
     @Override

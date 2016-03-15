@@ -278,7 +278,7 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
             }
             intent.putParcelableArrayListExtra("WHEELLIST", wheelList);
             intent.putExtra("USERID", userID);
-            //TODO: easier to use a boolean array than hashmap?
+
             startActivity(intent);
         }
     }

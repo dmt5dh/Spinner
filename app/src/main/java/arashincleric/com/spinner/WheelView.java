@@ -112,8 +112,7 @@ public class WheelView extends ImageView {
         int numberOfSectors = 360;
         int circle = 360;
         float degreePerSector = (float) circle/numberOfSectors;
-
-        //TODO: at position 0 it is 0!!!
+        
         //Then we can get the position of our price
         position = (int) Math.floor( angle / degreePerSector );
         float refPoint1 = 360; //get area start

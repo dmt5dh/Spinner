@@ -31,6 +31,7 @@ public class StartTaskFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setRetainInstance(true);
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
@@ -77,7 +78,6 @@ public class StartTaskFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnStartTaskFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void startTasks();
     }
 

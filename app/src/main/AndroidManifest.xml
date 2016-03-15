@@ -30,11 +30,15 @@
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppTheme" >
         </activity>
-        <activity android:name=".PracticeActivity"
-            android:screenOrientation="sensorLandscape">
+        <activity
+            android:name=".PracticeActivity"
+            android:screenOrientation="sensorLandscape" >
         </activity>
-        <activity android:name=".FinalGameActivity"
-            android:screenOrientation="sensorLandscape">
+        <activity
+            android:name=".FinalGameActivity"
+            android:screenOrientation="sensorLandscape" >
+        </activity>
+        <activity android:name=".QuestionnaireActivity" >
         </activity>
     </application>
 

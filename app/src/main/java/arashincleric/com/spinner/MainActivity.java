@@ -36,14 +36,12 @@ public class MainActivity extends AbstractTaskActivity {
     private EditText adminEntry;
     private EditText locationEntry;
     private Button submitBtn;
-    UsernameDbHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDbHelper = new UsernameDbHelper(this);
 
         nameEntry = (EditText) findViewById(R.id.nameEntryInput);
         idEntry = (EditText) findViewById(R.id.idEntryInput);
@@ -64,7 +62,6 @@ public class MainActivity extends AbstractTaskActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() { //Attach even to button
             @Override
             public void onClick(View v) {
-                //TODO: do confirmation here later
                 int validated = validateEntries();
                 if(validated == 0){
                     try{
@@ -119,35 +116,6 @@ public class MainActivity extends AbstractTaskActivity {
     public void onBackPressed(){
 
     }
-
-//    /**
-//     * Check if the two emails match and that they are not empty
-//     * @return 1:empty field(s), 2:not valid email, 3:emails don't match, 0:good
-//     */
-//    public int confirmEmail(){
-//        String email = emailEntry.getText().toString();
-//        String emailConfirm = emailEntryConfirm.getText().toString();
-//
-//        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-//        String query = "SELECT * FROM " + UsernameContract.Usernames.TABLE_NAME + " WHERE " + UsernameContract.Usernames.COLUMN_NAME_ENTRY_ID + " = ?";
-//        Cursor c = db.rawQuery(query, new String[]{emailEntry.getText().toString()});
-//        int x = c.getCount();
-//        if(email.isEmpty() || emailConfirm.isEmpty()){ //If either field empty
-//            return 1;
-//        }
-//        else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches() || !Patterns.EMAIL_ADDRESS.matcher(emailConfirm).matches()){ //If fields arent emails
-//            return 2;
-//        }
-//        else if(!email.equals(emailConfirm)){//If fields don't match
-//            return 3;
-//        }
-//        else if(c.getCount() > 0){ //If user has registered before
-//            return 4;
-//        }
-//        else{
-//            return 0;
-//        }
-//    }
 
     /**
      * Put a listener on every view to hide softkeyboard if edittext not chosen
