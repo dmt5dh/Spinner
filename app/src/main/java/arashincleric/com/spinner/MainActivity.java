@@ -29,8 +29,6 @@ import java.util.Calendar;
 
 public class MainActivity extends AbstractTaskActivity {
 
-    private String userEmail;
-
     private EditText nameEntry;
     private EditText idEntry;
     private EditText adminEntry;

@@ -16,7 +16,7 @@
         Remember this is the e-mail address that will be used to pay you</string>
     <string name="login_validate_error">Please fill out all fields</string>
     <string name="cancel_btn">Cancel</string>
-    <string name="no_checks">Please select a wheel</string>
+    <string name="no_checks">Please select a spinner</string>
     <string name="confirm_wheel_msg">Are you sure?</string>
     <string name="confirm_wheel_msg_practice">Done playing?</string>
     <string name="confirm_wheel_msg_practice2">Do you want to continue and start the tasks or continue practicing?</string>
@@ -30,7 +30,7 @@
     <string name="select_btn">Select Wheel</string>
     <string name="continue_btn">CONTINUE</string>
     <string name="practice_instructions_single">Play with the Spinner! Click continue when done.</string>
-    <string name="practice_instructions_double">Practice testing and choosing a wheel.</string>
+    <string name="practice_instructions_double">Practice testing and choosing a spinner.</string>
     <string name="checkbox_instruction">TAP TO SELECT</string>
     <string name="choose_random_btn">CHOOSE RANDOM</string>
     <string name="summary_screen_title">Summary of Decisions</string>

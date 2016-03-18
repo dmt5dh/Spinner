@@ -702,6 +702,18 @@ public class TaskFragment extends Fragment {
         leftWheel.removeCallbacks(flingRunnableRight);
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        leftWheel.setOnTouchListener(new MyOnTouchListener(true));
+        leftWheel.setEnabled(true);
+        leftSpinBtn.setEnabled(true);
+        rightWheel.setOnTouchListener(new MyOnTouchListener(false));
+        rightWheel.setEnabled(true);
+        rightSpinBtn.setEnabled(true);
+        mListener.fullScreen();
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

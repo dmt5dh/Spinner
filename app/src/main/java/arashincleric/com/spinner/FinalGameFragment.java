@@ -131,4 +131,13 @@ public class FinalGameFragment extends TaskFragment {
         confirmBtn.setEnabled(true);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (confirmBtn.isEnabled()) { //If the spin was not resolved before onStop called reattach myTouchListener to wheel
+            deactivateSpin(true);
+            deactivateSpin(false);
+        }
+    }
+
 }

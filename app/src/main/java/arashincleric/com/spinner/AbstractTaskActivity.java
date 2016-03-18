@@ -34,6 +34,10 @@ import java.util.Locale;
 
 public abstract class AbstractTaskActivity extends FragmentActivity {
 
+    //CHANGE TABLETID HERE
+    private String tabletId = "tabletID";
+    //CHANGE TABLETID ABOVE
+
     //File stuff here
     protected File filePathLog;
     protected File filePathParams;
@@ -193,7 +197,7 @@ public abstract class AbstractTaskActivity extends FragmentActivity {
      */
     public void logEvent(Calendar now, String stage, String action, String result, String outcome) throws Exception{
 
-        String dataToSave = "TabletIDHOLDER\t"
+        String dataToSave = tabletId + "\t"
                 + userID + "\t"
                 + dateFormat.format(now.getTime()) + "\t"
                 + timeFormat.format(now.getTime()) + "\t"

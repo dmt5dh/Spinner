@@ -331,7 +331,7 @@ public class SinglePracticeFragment extends Fragment {
 //                    setOrientationConstant();
 //                }
 
-            spinBtn.setClickable(false);
+            spinBtn.setEnabled(false);
             //start the runnable process
             flingRunnable = new FlingRunnable(direct * velocity);
             wheelView.post(flingRunnable);
@@ -413,7 +413,7 @@ public class SinglePracticeFragment extends Fragment {
                 scoreView.setText(String.format(score, scoreRecorded));
                 allowRotating = true;
                 wheelView.setEnabled(true);
-                spinBtn.setClickable(true);
+                spinBtn.setEnabled(true);
             }
         }
     }
@@ -453,6 +453,15 @@ public class SinglePracticeFragment extends Fragment {
     public void onStop(){
         super.onStop();
         wheelView.removeCallbacks(flingRunnable);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        wheelView.setOnTouchListener(new MyOnTouchListener());
+        wheelView.setEnabled(true);
+        spinBtn.setEnabled(true);
+        mListener.fullScreenSingle();
     }
 
     /**
