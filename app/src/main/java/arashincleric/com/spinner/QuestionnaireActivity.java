@@ -154,8 +154,9 @@ public class QuestionnaireActivity extends AbstractTaskActivity {
         else{
             root = Environment.getExternalStorageDirectory();
         }
+        super.fileRoot = new File(root + "/spinnerData");
         //Check if file directory exists. If not, create it and check if it was created.
-        File filePath = new File(root + "/QuestionnaireAnswers");
+        File filePath = new File(super.fileRoot + "/QuestionnaireAnswers");
         if(!filePath.exists()){
             boolean makeDir = filePath.mkdirs(); //Can't use this to check because it is false for error and dir exists
         }

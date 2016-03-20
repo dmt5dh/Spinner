@@ -36,11 +36,6 @@ public class FinishTaskActivity extends AbstractTaskActivity {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        Intent mStartActivity = new Intent(FinishTaskActivity.this, MainActivity.class);
-                        int mPendingIntentId = 123456;
-                        PendingIntent mPendingIntent = PendingIntent.getActivity(FinishTaskActivity.this, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-                        AlarmManager mgr = (AlarmManager) FinishTaskActivity.this.getSystemService(Context.ALARM_SERVICE);
-                        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 50, mPendingIntent);
                         System.exit(0);
                     }
                 });

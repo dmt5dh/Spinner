@@ -35,10 +35,12 @@ import java.util.Locale;
 public abstract class AbstractTaskActivity extends FragmentActivity {
 
     //CHANGE TABLETID HERE
-    private String tabletId = "tabletID";
+    public static final String tabletId = "tabletID";
+    public static final String versionId = "v1";
     //CHANGE TABLETID ABOVE
 
     //File stuff here
+    protected File fileRoot;
     protected File filePathLog;
     protected File filePathParams;
     protected File eventLogFile;
@@ -147,8 +149,9 @@ public abstract class AbstractTaskActivity extends FragmentActivity {
             root = Environment.getExternalStorageDirectory();
         }
 
+        fileRoot = new File(root + "/spinnerData");
         //Check if file directory exists. If not, create it and check if it was created.
-        filePathLog = new File(root + "/LogData");
+        filePathLog = new File(fileRoot + "/LogData");
         if(!filePathLog.exists()){
             boolean makeDir = filePathLog.mkdirs(); //Can't use this to check because it is false for both error and dir exists
         }
@@ -156,9 +159,8 @@ public abstract class AbstractTaskActivity extends FragmentActivity {
             Toast.makeText(this, "Error with creating directory. Exiting...", Toast.LENGTH_LONG).show();
             finish();
         }
-        String logFileName = "Test";
 
-        String eventLogFileName = logFileName + "_DATA.txt";
+        String eventLogFileName = tabletId + "_DATA_" + versionId + ".txt";
 //        String userLogFileName = logFileName + "_USERS.txt";
 
         //Create event logs

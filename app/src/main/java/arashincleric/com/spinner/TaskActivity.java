@@ -51,7 +51,7 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
         StartTaskFragment.OnStartTaskFragmentInteractionListener{
 
     /** PARAMETERS TO CHANGE**/
-    boolean randomizeList = true;
+    boolean randomizeList = false;
 
     /**PARAMETERS TO CHANGE**/
 
@@ -159,8 +159,9 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
             root = Environment.getExternalStorageDirectory();
         }
 
+        super.fileRoot = new File(root + "/spinnerData");
         //Check if file directory exists. If not, create it and check if it was created.
-        super.filePathParams = new File(root + "/UserParams");
+        super.filePathParams = new File(super.fileRoot + "/UserParams");
         if(!super.filePathParams.exists()){
             boolean makeDir = super.filePathParams.mkdirs(); //Can't use this to check because it is false for both error and dir exists
         }

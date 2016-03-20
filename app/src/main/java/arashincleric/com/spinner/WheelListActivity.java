@@ -219,7 +219,7 @@ public class WheelListActivity extends ListActivity {
      */
     public void logEvent(Calendar now, String stage, String action, String result, String outcome) throws Exception{
 
-        String dataToSave = "TabletIDHOLDER\t"
+        String dataToSave = AbstractTaskActivity.tabletId + "\t"
                 + userID + "\t"
                 + dateFormat.format(now.getTime()) + "\t"
                 + timeFormat.format(now.getTime()) + "\t"
@@ -251,9 +251,8 @@ public class WheelListActivity extends ListActivity {
         else{
             root = Environment.getExternalStorageDirectory();
         }
-
         //Check if file directory exists. If not, create it and check if it was created.
-        filePath = new File(root + "/LogData");
+        filePath = new File(root + "/spinnerData/LogData");
         if(!filePath.exists()){
             boolean makeDir = filePath.mkdirs(); //Can't use this to check because it is false for both error and dir exists
         }
@@ -261,9 +260,8 @@ public class WheelListActivity extends ListActivity {
             Toast.makeText(this, "Error with creating directory. Exiting...", Toast.LENGTH_LONG).show();
             finish();
         }
-        String logFileName = "Test";
 
-        String eventLogFileName = logFileName + "_DATA.txt";
+        String eventLogFileName = AbstractTaskActivity.tabletId + "_DATA_" + AbstractTaskActivity.versionId + ".txt";
 //        String userLogFileName = logFileName + "_USERS.txt";
 
         //Create event logs

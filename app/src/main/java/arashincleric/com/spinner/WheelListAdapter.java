@@ -24,6 +24,8 @@ public class WheelListAdapter  extends BaseAdapter implements ListAdapter{
     private ArrayList<WheelListActivity.WheelTuple> list = new ArrayList<WheelListActivity.WheelTuple>();
     private Context context;
 
+    private ViewHolder viewHolder;
+
     public WheelListAdapter(Context context, ArrayList<WheelListActivity.WheelTuple> list){
         this.context = context;
         this.list = list;
@@ -46,41 +48,69 @@ public class WheelListAdapter  extends BaseAdapter implements ListAdapter{
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent){
-        View view = null;
+        View view = convertView;
         if(view == null){ //If view not inflated, inflate it
+            viewHolder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.wheel_list_item, null);
+
+            viewHolder.decisionNum = (TextView)view.findViewById(R.id.decisionNumText);
+            viewHolder.leftWheel = (ImageView)view.findViewById(R.id.leftWheel);
+            viewHolder.rightWheel = (ImageView)view.findViewById(R.id.rightWheel);
+            viewHolder.leftCheckBox = (CheckBox)view.findViewById(R.id.leftCheckBox);
+            viewHolder.rightCheckBox = (CheckBox)view.findViewById(R.id.rightCheckBox);
+            viewHolder.wheelTuple = list.get(position);
+            view.setTag(viewHolder);
+        }
+        else{
+            viewHolder = (ViewHolder)view.getTag();
         }
 
-        TextView decisionNum = (TextView)view.findViewById(R.id.decisionNumText);
-        decisionNum.setText(Integer.toString(position + 1));
+        viewHolder.decisionNum.setText(Integer.toString(position + 1));
 
-        ImageView leftWheel = (ImageView)view.findViewById(R.id.leftWheel);
-        ImageView rightWheel = (ImageView)view.findViewById(R.id.rightWheel);
+        viewHolder.leftCheckBox.setClickable(false);
+        viewHolder.rightCheckBox.setClickable(false);
 
-        CheckBox leftCheckBox = (CheckBox)view.findViewById(R.id.leftCheckBox);
-        leftCheckBox.setClickable(false);
-        CheckBox rightCheckBox = (CheckBox)view.findViewById(R.id.rightCheckBox);
-        rightCheckBox.setClickable(false);
-
-        WheelListActivity.WheelTuple wheelTuple = list.get(position);
-
-        leftWheel.setImageBitmap(new WheelView(context, wheelTuple.left).getBitmapReduced());
-        rightWheel.setImageBitmap(new WheelView(context, wheelTuple.right).getBitmapReduced());
+        viewHolder.leftWheel.setImageBitmap(new WheelView(context, viewHolder.wheelTuple.left).getBitmapReduced());
+        viewHolder.rightWheel.setImageBitmap(new WheelView(context, viewHolder.wheelTuple.right).getBitmapReduced());
 
         int id = context.getResources().getIdentifier("GREY", "color", context.getPackageName());
         int colorId=context.getResources().getColor(id);
 
-        if(!wheelTuple.left.isChosen()){
-            leftWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY); //TODO:TWEAK THIS TO DIM(Multiply)
-            rightCheckBox.setChecked(true);
+        if(!viewHolder.wheelTuple.left.isChosen()){
+            viewHolder.leftWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY); //TODO:TWEAK THIS TO DIM(Multiply)
+            viewHolder.rightCheckBox.setChecked(true);
         }
         else{
-            rightWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY); //TODO:TWEAK THIS TO DIM(Multiply)
-            leftCheckBox.setChecked(true);
+            viewHolder.rightWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY); //TODO:TWEAK THIS TO DIM(Multiply)
+            viewHolder.leftCheckBox.setChecked(true);
         }
 
         return view;
+    }
+
+    @Override
+    public int getViewTypeCount(){
+        if(list.size() == 0){
+            return 1;
+        }
+        else{
+            return list.size();
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position){
+        return position;
+    }
+
+    static class ViewHolder{
+        TextView decisionNum;
+        ImageView leftWheel;
+        ImageView rightWheel;
+        CheckBox leftCheckBox;
+        CheckBox rightCheckBox;
+        WheelListActivity.WheelTuple wheelTuple;
     }
 
     @Override

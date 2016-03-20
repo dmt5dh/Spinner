@@ -29,16 +29,17 @@
     <string name="spin_btn">SPIN</string>
     <string name="select_btn">Select Wheel</string>
     <string name="continue_btn">CONTINUE</string>
-    <string name="practice_instructions_single">Play with the Spinner! Click continue when done.</string>
-    <string name="practice_instructions_double">Practice testing and choosing a spinner.</string>
+    <string name="practice_instructions_single">Play with the Spinner (by clicking the SPIN button)! Click CONTINUE when done.</string>
+    <string name="practice_instructions_double">Now there are two spinners. Play with them and choose the spinner you like.</string>
     <string name="checkbox_instruction">TAP TO SELECT</string>
     <string name="choose_random_btn">CHOOSE RANDOM</string>
     <string name="summary_screen_title">Summary of Decisions</string>
     <string name="start_task_text">Now, choose spinners for real</string>
     <string name="questionnaire_alert">Please fill out all fields</string>
     <string name="answer_hint">Type answer here</string>
-    <string name="complete_msg">Thank you for playing! Your score is: %1$d</string>
+    <string name="complete_msg">Thank you for playing! Your payoff is: %1$d</string>
     <string name="finish_btn">FINISH</string>
-    <string name="final_game_title">Final Game</string>
+    <string name="final_game_title">Game to be paid</string>
+    <string name="close_alert_btn">OKAY</string>
 
 </resources>
