@@ -42,7 +42,8 @@
         </activity>
         <activity
             android:name=".QuestionnaireActivity"
-            android:screenOrientation="sensorLandscape" >
+            android:screenOrientation="sensorLandscape"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity android:name=".FinishTaskActivity"
             android:screenOrientation="sensorLandscape">
