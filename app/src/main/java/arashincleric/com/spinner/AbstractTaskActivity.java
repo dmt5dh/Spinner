@@ -239,7 +239,7 @@ public abstract class AbstractTaskActivity extends FragmentActivity {
         try{
             JSONArray jsonArray = new JSONArray(json);
             for(int i = 0; i < jsonArray.length(); i++){
-                JSONObject jsonWheel = jsonArray.getJSONObject(i).getJSONObject("wheel");
+                JSONObject jsonWheel = jsonArray.getJSONObject(i).getJSONObject("spinner");
                 JSONArray sectionsJsonArray = jsonWheel.getJSONArray("sections");
                 JSONArray priceJsonArray = jsonWheel.getJSONArray("pricelist");
                 JSONArray colorJsonList = jsonWheel.getJSONArray("colorlist");

@@ -1,6 +1,6 @@
 [
   {
-    "wheel":{
+    "spinner":{
       "sections":[
         180,
         180
@@ -16,7 +16,7 @@
     }
   },
   {
-    "wheel":{
+    "spinner":{
       "sections": [
         180,
         180
@@ -32,7 +32,7 @@
     }
   },
   {
-    "wheel":{
+    "spinner":{
       "sections": [
         90,
         90,

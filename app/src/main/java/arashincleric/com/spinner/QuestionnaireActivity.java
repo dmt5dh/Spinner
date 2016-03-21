@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +25,19 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,22 +58,7 @@ public class QuestionnaireActivity extends AbstractTaskActivity {
 
         context = this;
 
-        questionList = new ArrayList<Question>();
-
-        /** ADD QUESTIONS HERE */
-        questionList.add(new Question("Do you have any suggestions for improvements in the game design?")); //Free response
-//        questionList.add(new Question("Why did you decide to leave when you did?")); //Free response
-//
-        questionList.add(new QuestionRadioButtons("Would you be willing to come back for another trial under the same conditions?", 2, new String[]{"Yes", "No"}, false)); // Radio buttons
-        questionList.add(new QuestionRadioButtons("How was the work environment? Mark all that apply.", 8, new String[]{"Friendly", "Quiet", "Meditative", "Exciting", "Boring", "Stressful", "Painful", "Relaxing"}, true));
-
-        questionList.add(new Question("Do you have any suggestions for improvement in terms of the work environment")); //Free response
-        questionList.add(new Question("Did you experience any technical problems (tablet/stands/program)")); //Free response
-//        questionList.add(new Question("Do you have any suggestions for improvement in terms of technical problems")); //Free response
-//        questionList.add(new Question("Are you happy with the payment scheme ")); //Free response
-
-
-        /** ADD QUESTIONS ABOVE */
+        questionList = initializeQuestionList();
 
         for(int i = 0; i < questionList.size(); i++){ //Go through each question and generate the view
             Question q = questionList.get(i);
@@ -208,7 +205,11 @@ public class QuestionnaireActivity extends AbstractTaskActivity {
                 String selections = "";
                 for(int j = 0; j < checkGroup.getChildCount(); j++){
                     CheckBox checkBox = (CheckBox)checkGroup.getChildAt(j);
-                    if(checkBox.isChecked()){
+                    if(checkBox.isChecked() && checkBox.getText().toString().toLowerCase().contains("other")){
+                        TextView otherText = (TextView)layout.getChildAt(i).findViewById(R.id.otherEditText);
+                        selections = selections + "Other: " +  otherText.getText().toString() + ",";
+                    }
+                    else if(checkBox.isChecked()){
                         selections = selections + checkBox.getText().toString() + ",";
                     }
                 }
@@ -289,5 +290,56 @@ public class QuestionnaireActivity extends AbstractTaskActivity {
                 .setMessage(R.string.questionnaire_alert)
                 .setNegativeButton(R.string.cancel_btn, null)
                 .show();
+    }
+
+    public ArrayList<Question> initializeQuestionList(){
+        //Read wheel data from JSON
+        InputStream is;
+            is = getResources().openRawResource(R.raw.questions);
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
+        try{
+            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            int n;
+            while ((n = reader.read(buffer)) != -1){
+                writer.write(buffer, 0, n);
+            }
+            is.close();
+        }
+        catch (IOException e){
+            Log.e("ERROR", "Error loading wheels");
+        }
+
+        ArrayList<Question> questionList = new ArrayList<Question>();
+        String json = writer.toString();
+        try{
+            JSONArray jsonArray = new JSONArray(json);
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject jsonQuestion = jsonArray.getJSONObject(i).getJSONObject("questionObject");
+                String questionText = jsonQuestion.getString("question");
+                String type = jsonQuestion.getString("type");
+                Question question;
+                if(type.equals("radio") || type.equals("checkbox")){
+                    JSONArray answerJsonArray = jsonQuestion.getJSONArray("answer");
+                    String[] answerList = new String[answerJsonArray.length()];
+                    for(int j = 0; j < answerList.length; j++){
+                        answerList[j] = answerJsonArray.getString(j);
+                    }
+                    question = new QuestionRadioButtons(questionText,
+                            answerJsonArray.length(),
+                            answerList,
+                            type.equals("checkbox"));
+                }
+                else{
+                    question = new Question(questionText);
+                }
+                questionList.add(question);
+            }
+        }
+        catch (JSONException e){
+            Log.e("ERROR", "Error loading wheels...json");
+        }
+
+        return questionList;
     }
 }

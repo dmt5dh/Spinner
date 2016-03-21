@@ -41,5 +41,8 @@
     <string name="finish_btn">FINISH</string>
     <string name="final_game_title">Game to be paid</string>
     <string name="close_alert_btn">OKAY</string>
+    <string name="radio_hint">Add answer here</string>
+    <string name="questionnaire_confirm_msg">Did you answer everything?</string>
+    <string name="questionnaire_done">Done</string>
 
 </resources>

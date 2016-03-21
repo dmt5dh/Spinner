@@ -1,0 +1,171 @@
+[
+  {
+    "questionObject":{
+      "question": "I am: ",
+      "type": "radio",
+      "answer":[
+        "Girl",
+        "Boy"
+      ]
+    }
+  },
+  {
+    "questionObject":{
+      "question": "What grade are you in school?",
+      "type": "free response"
+    }
+  },
+  {
+    "questionObject":{
+      "question": "How old are you?",
+      "type": "free response"
+    }
+  },
+  {
+    "questionObject":{
+      "question": "Who lives in your home? (put an \"X\" by all that are true)",
+      "type": "checkbox",
+      "answer":[
+        "Mom",
+        "Dad",
+        "Brother(s)",
+        "Sister(s)",
+        "Grandpa(s)",
+        "Grandma(s)",
+        "Other (fill in the blank)"
+      ]
+    }
+  },
+  {
+    "questionObject":{
+      "question": "Most nights, who do you have dinner with? (put an \"X\" by all that are true)",
+      "type": "checkbox",
+      "answer":[
+        "Mom",
+        "Dad",
+        "Brother(s)",
+        "Sister(s)",
+        "Grandpa(s)",
+        "Grandma(s)",
+        "Other (fill in the blank)"
+      ]
+    }
+  },
+  {
+    "questionObject":{
+      "question": "At home, who helps you with your homework? (put an \"X\" by all that are true)",
+      "type": "checkbox",
+      "answer":[
+        "Mom",
+        "Dad",
+        "Brother(s)",
+        "Sister(s)",
+        "Grandpa(s)",
+        "Grandma(s)",
+        "Other (fill in the blank)"
+      ]
+    }
+  },
+  {
+    "questionObject":{
+      "question": "If you do well in school, what do your parents do? (put an \"X\" by all that are true)",
+      "type": "checkbox",
+      "answer":[
+        "They say \"Good Job!\"",
+        "I get hugs",
+        "I get toys",
+        "I get books",
+        "I can play more with my friends",
+        "Nothing",
+        "Other (fill in the blank)"
+      ]
+    }
+  },
+  {
+    "questionObject":{
+      "question": "If you do poorly in school, what do your parents do? (put an \"X\" by all that are true)",
+      "type": "checkbox",
+      "answer":[
+        "They get mad at me",
+        "I can't play with my toys",
+        "I can't play with my friends",
+        "I don't get toys or allowance",
+        "I have to work harder",
+        "Nothing",
+        "Other (fill in the blank)"
+      ]
+    }
+  },
+  {
+    "questionObject":{
+      "question": "Outside of school, how many hours a day do you spend playing?",
+      "type": "radio",
+      "answer":[
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ]
+    }
+  },
+  {
+    "questionObject":{
+      "question": "Outside of school, how many hours a day do you spend watching TV?",
+      "type": "radio",
+      "answer":[
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ]
+    }
+  },
+  {
+    "questionObject":{
+      "question": "Outside of school, how many hours a day do you spend on the computer not doing work?",
+      "type": "radio",
+      "answer":[
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ]
+    }
+  },
+  {
+    "questionObject":{
+      "question": "Outside of school, how many hours a day do you spend doing homework?",
+      "type": "radio",
+      "answer":[
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ]
+    }
+  }
+]
