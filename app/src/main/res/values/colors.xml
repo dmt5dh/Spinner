@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--DO NOT TOUCH BELOW-->
     <color name="colorPrimary">#505050</color>
     <color name="colorPrimaryDark">#313131</color>
     <color name="colorAccent">#31d6ff</color>
     <color name="GREY">#262626</color>
+    <!--DO NOT TOUCH ABOVE-->
 
+
+    <!--ADD/MODIFY BELOW-->
     <color name="RED">#b9151e</color>
     <color name="ORANGE">#daaa49</color>
     <color name="YELLOW">#f0ff1b</color>
@@ -13,4 +17,5 @@
     <color name="CYAN">#5efff2</color>
     <color name="PURPLE">#854cff</color>
     <color name="PINK">#fd51fd</color>
+    <!--ADD/MODIFY ABOVE-->
 </resources>

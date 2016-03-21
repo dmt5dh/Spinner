@@ -139,7 +139,7 @@ public class WheelView extends ImageView {
         Canvas c = new Canvas(b);
         this.layout(0, 0, 1500, 1500); //Change to same value above
         rectf = new RectF (0, 0, 1500, 1500); //change this and below for better resolution
-        FONT_SIZE = 200f;
+        FONT_SIZE = 125f;
         this.draw(c);
         return b;
     }
