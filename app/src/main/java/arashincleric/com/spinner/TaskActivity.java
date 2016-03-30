@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -60,6 +61,7 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
     private ArrayList<Wheel> wheelList;
     private ArrayList<Boolean> selected;
     private int curWheelIndex;
+    private TextView gameNumberText;
 
     protected int stageNum;
 
@@ -87,6 +89,7 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
         transaction.add(R.id.fragmentContainer, mContent).commit();
 
         stageNum = 1;
+        gameNumberText = (TextView)findViewById(R.id.gameNumberText);
 
         super.userID = getIntent().getStringExtra("USERID");
         createUserParamsFile();
@@ -217,6 +220,7 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
             fragmentManager.executePendingTransactions();
 //            turnFullScreen();
             stageNum++;
+            gameNumberText.setText(Integer.toString(stageNum));
         }
         else{
             FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -308,6 +312,8 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
         transaction.disallowAddToBackStack();
         mContent = TaskFragment.newInstance();
         transaction.replace(R.id.fragmentContainer, mContent).commit();
+
+        gameNumberText.setText(Integer.toString(stageNum));
     }
 
 }
