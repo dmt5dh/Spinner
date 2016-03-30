@@ -266,7 +266,7 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
         boolean isRightSelected = currentTask.isRightSelectBtnChecked();
 
         if (!isLeftSelected && !isRightSelected) {
-            logEventTask("Clicked continue", "Task not resolved", "-");
+            logEventTask("Clicked continue without choice", "Task not resolved", "-");
             new AlertDialog.Builder(this)
                     .setMessage(R.string.no_checks)
                     .setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -275,11 +275,16 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
                             turnFullScreen();
                         }
                     })
-                    .setNeutralButton(R.string.cancel_btn, null)
+                    .setNeutralButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            logEventTask("Cancelled without choice", "Task not resolved", "-");
+                        }
+                    })
                     .show();
         } else {
             //LOG: log confirmation screen click
-            logEventTask("Clicked continue", "Task resolution", "-");
+            logEventTask("Clicked continue with choice", "Task resolution", "-");
             new AlertDialog.Builder(this)
                     .setMessage(R.string.confirm_wheel_msg)
                     .setPositiveButton(R.string.yes_confirm, new DialogInterface.OnClickListener() { //LOG: log confirm click
@@ -299,7 +304,7 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //LOG: log cancel click
-                            logEventTask("Cancel continue", "Task resolution", "-");
+                            logEventTask("Cancelled with choice", "Task resolution", "-");
                         }
                     })
                     .show();
