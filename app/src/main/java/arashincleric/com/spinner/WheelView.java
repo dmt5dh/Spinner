@@ -79,7 +79,14 @@ public class WheelView extends ImageView {
 //                canvas.drawText("Text", (float) (centerX + (radius * Math.cos(medianAngle))), (float) (centerY + (radius * Math.sin(medianAngle))), paint);
             }
             paint.setColor(Color.BLACK);
-            float medianAngle = (temp + (value_degree[i] / 2f)) * (float)Math.PI / 180f; // this angle will place the text in the center of the arc.
+//            float medianAngle = (temp + (value_degree[i] / 2f)) * (float)Math.PI / 180f; // this angle will place the text in the center of the arc.
+            float medianAngle;
+            if(value_degree[i] <= 30){
+                medianAngle = ((temp + (value_degree[i] / 2f)) + 5) * (float)Math.PI / 180f;
+            }
+            else{
+                medianAngle = (temp + (value_degree[i] / 2f)) * (float)Math.PI / 180f;
+            }
             paint.setTextSize(FONT_SIZE);
             canvas.drawText(Integer.toString(scores[i]), (float)(centerX + (radius * Math.cos(medianAngle))), (float)(centerY + (radius * Math.sin(medianAngle))), paint);
         }
@@ -139,7 +146,7 @@ public class WheelView extends ImageView {
         Canvas c = new Canvas(b);
         this.layout(0, 0, 1500, 1500); //Change to same value above
         rectf = new RectF (0, 0, 1500, 1500); //change this and below for better resolution
-        FONT_SIZE = 125f;
+        FONT_SIZE = 110f;
         this.draw(c);
         return b;
     }
