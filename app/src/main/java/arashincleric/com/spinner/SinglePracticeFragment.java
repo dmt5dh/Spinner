@@ -25,6 +25,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import java.util.Random;
+
 
 public class SinglePracticeFragment extends Fragment {
 
@@ -184,7 +186,9 @@ public class SinglePracticeFragment extends Fragment {
                 if(allowRotating){
                     //LOG: spin button pressed
                     mListener.logEventSingle("Experimenting", "Spinned single", "-");
-                    startTheSpinWithDirection("normal", 1000);
+                    Random random = new Random();
+                    int seed = random.nextInt(2000);
+                    startTheSpinWithDirection("normal", 10000 + seed);
                 }
 
             }

@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.util.Random;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -303,7 +305,9 @@ public class TaskFragment extends Fragment {
                 if(allowRotatingLeft){
                     //LOG: log left click
                     mListener.logEventTask("Experimenting", "Spin left", "-");
-                    startTheSpinWithDirection("normal", 1000, true);
+                    Random random = new Random();
+                    int seed = random.nextInt(2000);
+                    startTheSpinWithDirection("normal", 10000 + seed, true);
                 }
 
             }
@@ -316,7 +320,9 @@ public class TaskFragment extends Fragment {
                 if(allowRotatingRight){
                     //LOG: log right click
                     mListener.logEventTask("Experimenting", "Spin right", "-");
-                    startTheSpinWithDirection("normal", 1000, false);
+                    Random random = new Random();
+                    int seed = random.nextInt(2000);
+                    startTheSpinWithDirection("normal", 10000 + seed, false);
                 }
             }
         });

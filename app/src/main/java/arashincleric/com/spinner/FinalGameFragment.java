@@ -23,6 +23,8 @@ import android.widget.ToggleButton;
 
 import org.w3c.dom.Text;
 
+import java.util.Random;
+
 
 public class FinalGameFragment extends TaskFragment {
 
@@ -87,7 +89,9 @@ public class FinalGameFragment extends TaskFragment {
                     if (allowRotatingLeft) {
                         //LOG: log left click
                         mListener.logEventTask("Chosen Game", "Spun spinner", "-");
-                        startTheSpinWithDirection("normal", 1000, true);
+                        Random random = new Random();
+                        int seed = random.nextInt(2000);
+                        startTheSpinWithDirection("normal", 10000 + seed, true);
                     }
                     deactivateSpin(true);
 
@@ -106,7 +110,9 @@ public class FinalGameFragment extends TaskFragment {
                     if (allowRotatingRight) {
                         //LOG: log right click
                         mListener.logEventTask("Chosen Game", "Spun spinner", "-");
-                        startTheSpinWithDirection("normal", 1000, false);
+                        Random random = new Random();
+                        int seed = random.nextInt(2000);
+                        startTheSpinWithDirection("normal", 10000 + seed, false);
                     }
                     deactivateSpin(false);
                 }
