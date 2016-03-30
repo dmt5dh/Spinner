@@ -3,7 +3,8 @@
     android:layout_height="match_parent"
     tools:context="arashincleric.com.spinner.SinglePracticeFragment"
     android:orientation="vertical"
-    android:weightSum="10">
+    android:weightSum="10"
+    android:paddingTop="16dp">
 
     <!--<TextView-->
         <!--android:layout_width="wrap_content"-->
@@ -39,7 +40,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_weight="3"
+        android:paddingTop="16dp">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

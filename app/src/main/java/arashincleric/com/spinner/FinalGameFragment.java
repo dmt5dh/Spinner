@@ -80,8 +80,9 @@ public class FinalGameFragment extends TaskFragment {
         if(super.wLeft.getWheelObject().isChosen()){
             super.rightScoreView.setVisibility(View.GONE);
             super.rightSpinBtn.setVisibility(View.GONE);
-            rightWheel.setEnabled(false);
-            rightWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY);
+            super.rightWheel.setEnabled(false);
+            super.rightWheel.setOnTouchListener(null);
+            super.rightWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY);
 
             super.leftSpinBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -101,8 +102,9 @@ public class FinalGameFragment extends TaskFragment {
         else{
             super.leftScoreView.setVisibility(View.GONE);
             super.leftSpinBtn.setVisibility(View.GONE);
-            leftWheel.setEnabled(false);
-            leftWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY);
+            super.leftWheel.setEnabled(false);
+            super.leftWheel.setOnTouchListener(null);
+            super.leftWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY);
 
             super.rightSpinBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -143,6 +145,14 @@ public class FinalGameFragment extends TaskFragment {
         if (confirmBtn.isEnabled()) { //If the spin was not resolved before onStop called reattach myTouchListener to wheel
             deactivateSpin(true);
             deactivateSpin(false);
+        }
+        if(super.wLeft.getWheelObject().isChosen()){
+            super.rightWheel.setEnabled(false);
+            super.rightWheel.setOnTouchListener(null);
+        }
+        else{
+            super.leftWheel.setEnabled(false);
+            super.leftWheel.setOnTouchListener(null);
         }
     }
 
