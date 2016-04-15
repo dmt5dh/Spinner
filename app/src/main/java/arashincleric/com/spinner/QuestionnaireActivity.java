@@ -289,6 +289,7 @@ public class QuestionnaireActivity extends AbstractTaskActivity {
         new AlertDialog.Builder(this)
                 .setMessage(R.string.questionnaire_alert)
                 .setNegativeButton(R.string.cancel_btn, null)
+                .setCancelable(false)
                 .show();
     }
 

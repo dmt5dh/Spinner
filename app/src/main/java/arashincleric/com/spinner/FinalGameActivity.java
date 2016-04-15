@@ -1,18 +1,12 @@
 package arashincleric.com.spinner;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,26 +29,26 @@ public class FinalGameActivity extends AbstractTaskActivity implements FinalGame
         super.userID = intent.getStringExtra("USERNAME");
         gameNum = intent.getIntExtra("GAMENUM", 0);
 
-        TextView gameNumText = (TextView)findViewById(R.id.gameNumberText);
+        TextView gameNumText = (TextView)findViewById(R.id.gameNumberText); //Set game number
         gameNumText.setText(Integer.toString(gameNum));
 
         fragmentManager = getSupportFragmentManager();
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.disallowAddToBackStack();
-        mContent = FinalGameFragment.newInstance(gameNum);
+        mContent = FinalGameFragment.newInstance();
         transaction.add(R.id.fragmentContainer, mContent).commit();
     }
 
     @Override
-    public Wheel getWheelFromList(){
+    public Wheel getWheelFromList(boolean isLeft){ //Get the first item and remove, should only be done twice on list size of 2
         Wheel w = wheelList.get(0);
         wheelList.remove(0);
         return w;
     }
 
     @Override
-    public void nextScreen(boolean isLeftSelected){
+    public void nextScreen(boolean isLeftSelected){ //Go to questionnaire
         Intent intent = new Intent(FinalGameActivity.this, QuestionnaireActivity.class);
         intent.putExtra("USERNAME", userID);
         intent.putExtra("SCORE", score);
@@ -77,7 +71,7 @@ public class FinalGameActivity extends AbstractTaskActivity implements FinalGame
             Log.e("ERROR", "Error logging payment data");
         }
 
-        if(!outcome.equals("-") && !outcome.isEmpty()){
+        if(!outcome.equals("-") && !outcome.isEmpty()){ //Enable confirm button after a score is shown
             score = Integer.parseInt(outcome);
             ((FinalGameFragment)mContent).enableConfirmBtn();
         }

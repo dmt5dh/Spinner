@@ -16,13 +16,13 @@ import android.widget.ImageView;
 public class Wheel implements Parcelable{
 
     private Paint paint=new Paint(Paint.ANTI_ALIAS_FLAG);
-    private float[] value_degree;
-    private int[] scores;
-    private int[] COLORS;
+    public float[] value_degree;
+    public int[] scores;
+    public int[] COLORS;
     private String[] colorNames;
     RectF rectf = new RectF (0, 0, 2000, 2000); //change this and below for better resolution
     float temp=0;
-    private boolean isChosen;
+    public boolean isChosen;
     Context context;
 
     public Wheel(){

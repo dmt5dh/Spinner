@@ -88,7 +88,7 @@ public class PracticeActivity extends AbstractTaskActivity implements
     }
 
     @Override
-    public Wheel getWheelFromList(){
+    public Wheel getWheelFromList(boolean isLeft){
         Wheel w = wheelList.get(0);
         if(wheelList.size() > 1){
             wheelList.remove(0);
@@ -141,6 +141,7 @@ public class PracticeActivity extends AbstractTaskActivity implements
                         }
                     })
                     .setNeutralButton(R.string.cancel_btn, null)
+                    .setCancelable(false)
                     .show();
         } else {
             //LOG: log confirmation screen click
@@ -167,6 +168,7 @@ public class PracticeActivity extends AbstractTaskActivity implements
                             logEventTask("Cancel continue", "Practice task resolution", "-");
                         }
                     })
+                    .setCancelable(false)
                     .show();
         }
     }

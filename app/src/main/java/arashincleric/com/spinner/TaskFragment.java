@@ -91,8 +91,8 @@ public class TaskFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         if (getArguments() != null) {
-            wLeft = new WheelView(getContext(), mListener.getWheelFromList());
-            wRight = new WheelView(getContext(), mListener.getWheelFromList());
+            wLeft = new WheelView(getContext(), mListener.getWheelFromList(true));
+            wRight = new WheelView(getContext(), mListener.getWheelFromList(false));
         }
 
         //New instance so we want to redraw every time
@@ -249,45 +249,6 @@ public class TaskFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mListener.showConfirmation();
-//                if (!leftSelectBtn.isChecked() && !rightSelectBtn.isChecked()) {
-//                    mListener.logEventTask("Clicked continue", "Practice task not resolved", "-");
-//                    new AlertDialog.Builder(v.getContext())
-//                            .setMessage(R.string.no_checks)
-//                            .setOnDismissListener(new DialogInterface.OnDismissListener() {
-//                                @Override
-//                                public void onDismiss(DialogInterface dialog) {
-//                                    mListener.fullScreen();
-//                                }
-//                            })
-//                            .setNeutralButton(R.string.cancel_btn, null)
-//                            .show();
-//                } else {
-//                    //LOG: log confirmation screen click
-//                    mListener.logEventTask("Clicked continue", "Practice task resolution", "-");
-//                    new AlertDialog.Builder(v.getContext())
-//                            .setMessage(R.string.confirm_wheel_msg)
-//                            .setPositiveButton(R.string.yes_confirm, new DialogInterface.OnClickListener() { //LOG: log confirm click
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    mListener.logEventTask("Confirm continue", "Practice task resolution", "-");
-//                                    mListener.nextScreen(leftSelectBtn.isChecked());
-//                                }
-//                            })
-//                            .setOnDismissListener(new DialogInterface.OnDismissListener() {
-//                                @Override
-//                                public void onDismiss(DialogInterface dialog) {
-//                                    mListener.fullScreen();
-//                                }
-//                            })
-//                            .setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    //LOG: log cancel click
-//                                    mListener.logEventTask("Cancel continue", "Practice task resolution", "-");
-//                                }
-//                            })
-//                            .show();
-//                }
             }
         });
 
@@ -731,7 +692,7 @@ public class TaskFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnTaskFragmentInteractionListener {
-        public Wheel getWheelFromList();
+        public Wheel getWheelFromList(boolean isLeft);
         public void nextScreen(boolean isLeftSelected);
         public void fullScreen();
         public void logEventTask(String action, String result, String outcome);

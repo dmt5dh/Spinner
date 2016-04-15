@@ -2,33 +2,21 @@ package arashincleric.com.spinner;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.content.res.XmlResourceParser;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,15 +25,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.lang.reflect.Array;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.Random;
 
 public class TaskActivity extends AbstractTaskActivity implements TaskFragment.OnTaskFragmentInteractionListener,
@@ -58,9 +41,10 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
 
     private FragmentManager fragmentManager;
     private Fragment mContent;
-    private ArrayList<Wheel> wheelList;
+    private ArrayList<WheelTuple> wheelList;
     private ArrayList<Boolean> selected;
-    private int curWheelIndex;
+    private int curWheelIndex; //To keep track of which spinners used
+    private int curWheelTupleIndex; //To keep track of what has been chosen
     private TextView gameNumberText;
 
     protected int stageNum;
@@ -71,10 +55,11 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
-        wheelList = super.initializeWheelList(false);
+        wheelList = initializeWheelTupleList();
 
 
         curWheelIndex = 0;
+        curWheelTupleIndex = 0;
 
         selected = new ArrayList<Boolean>();
         if(randomizeList){
@@ -95,6 +80,72 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
         createUserParamsFile();
 
         super.setupUI(findViewById(android.R.id.content));
+    }
+
+
+    public ArrayList<WheelTuple> initializeWheelTupleList(){
+        //Read wheel data from JSON
+        InputStream is;
+        is = getResources().openRawResource(R.raw.task);
+
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
+        try{
+            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            int n;
+            while ((n = reader.read(buffer)) != -1){
+                writer.write(buffer, 0, n);
+            }
+            is.close();
+        }
+        catch (IOException e){
+            Log.e("ERROR", "Error loading wheels");
+        }
+
+        ArrayList<WheelTuple> wheelList = new ArrayList<WheelTuple>();
+        String json = writer.toString();
+        try{
+            JSONArray jsonArray = new JSONArray(json);
+            for(int i = 0; i < jsonArray.length(); i = i+ 2 ){
+                JSONObject jsonWheelLeft = jsonArray.getJSONObject(i).getJSONObject("spinner"); //Get first(left) spinner
+                JSONArray sectionsJsonArrayLeft = jsonWheelLeft.getJSONArray("sections");
+                JSONArray priceJsonArrayLeft = jsonWheelLeft.getJSONArray("pricelist");
+                JSONArray colorJsonListLeft = jsonWheelLeft.getJSONArray("colorlist");
+
+                float[] sectionsArrayLeft = new float[sectionsJsonArrayLeft.length()];
+                int[] priceArrayLeft = new int[sectionsJsonArrayLeft.length()];
+                String[] colorArrayLeft = new String[sectionsJsonArrayLeft.length()];
+                for(int j = 0; j < sectionsJsonArrayLeft.length(); j++){
+                    sectionsArrayLeft[j] = (float)((int)sectionsJsonArrayLeft.get(j) / 1.0); //To convert int to float
+                    priceArrayLeft[j] = (int)priceJsonArrayLeft.get(j);
+                    colorArrayLeft[j] = (String)colorJsonListLeft.get(j);
+                }
+
+                JSONObject jsonWheelRight = jsonArray.getJSONObject(i + 1).getJSONObject("spinner"); //Get second(right) spinner
+                JSONArray sectionsJsonArrayRight = jsonWheelRight.getJSONArray("sections");
+                JSONArray priceJsonArrayRight = jsonWheelRight.getJSONArray("pricelist");
+                JSONArray colorJsonListRight = jsonWheelRight.getJSONArray("colorlist");
+
+                float[] sectionsArrayRight = new float[sectionsJsonArrayRight.length()];
+                int[] priceArrayRight = new int[sectionsJsonArrayRight.length()];
+                String[] colorArrayRight = new String[sectionsJsonArrayRight.length()];
+                for(int j = 0; j < sectionsJsonArrayRight.length(); j++){
+                    sectionsArrayRight[j] = (float)((int)sectionsJsonArrayRight.get(j) / 1.0); //To convert int to float
+                    priceArrayRight[j] = (int)priceJsonArrayRight.get(j);
+                    colorArrayRight[j] = (String)colorJsonListRight.get(j);
+                }
+
+                Wheel lWheel = new Wheel(this, sectionsArrayLeft, priceArrayLeft, colorArrayLeft);
+                Wheel rWheel = new Wheel(this,sectionsArrayRight, priceArrayRight, colorArrayRight);
+
+                wheelList.add(new WheelTuple(lWheel, rWheel));
+            }
+        }
+        catch (JSONException e){
+            Log.e("ERROR", "Error loading wheels...json");
+        }
+
+        return wheelList;
     }
 
     /**
@@ -137,7 +188,7 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
         if(!super.userParamsFile.exists()){
             try{
                 FileOutputStream paramLogFileStream = new FileOutputStream(super.userParamsFile);
-                for(int i = 0; i < wheelList.size(); i = i + 2){
+                for(int i = 0; i < wheelList.size(); i++){
                     StringBuilder column = new StringBuilder(); //first column
 
                     StringBuilder colorColumn = new StringBuilder();
@@ -149,10 +200,10 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
                     StringBuilder probColumn = new StringBuilder();
                     probColumn.append("\tProbability\t");
 
-                    column.append("Task " + ((i / 2) + 1) + "\t"
+                    column.append("Task " + (i + 1) + "\t"
                             + "\t"
                             + "Left");
-                    Wheel leftWheel = wheelList.get(i);
+                    Wheel leftWheel = wheelList.get(i).left;
                     for(int j = 0; j < leftWheel.getSiezeValue_degree(); j++){ //iterate through sections to allocate space
                         column.append("\t");
                         colorColumn.append(leftWheel.getColorNames()[j] + "\t");
@@ -161,7 +212,7 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
                     }
 
                     column.append("Right");
-                    Wheel rightWheel = wheelList.get(i + 1);
+                    Wheel rightWheel = wheelList.get(i).right;
                     for(int j = 0; j < rightWheel.getSiezeValue_degree(); j++){
                         column.append("\t");
                         colorColumn.append(rightWheel.getColorNames()[j] + "\t");
@@ -189,11 +240,18 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
     }
 
     @Override
-    public Wheel getWheelFromList(){
+    public Wheel getWheelFromList(boolean isLeft){
         if(curWheelIndex < wheelList.size()){
-            Wheel w = wheelList.get(curWheelIndex);
-            selected.add(false);
-            curWheelIndex++;
+            Wheel w;
+            if(isLeft){
+                w = wheelList.get(curWheelIndex).left;
+            }
+            else{
+                w = wheelList.get(curWheelIndex).right;
+                curWheelIndex++; //Advance from here, because if we get the right spinner we move on to next screen
+            }
+            selected.add(false); //Default to unselected
+            curWheelTupleIndex++;
             return w;
         }
         else{
@@ -203,11 +261,11 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
 
     @Override
     public void nextScreen(boolean isLeftSelected){
-        if(isLeftSelected){
-            selected.set(curWheelIndex - 2, true);
+        if(isLeftSelected){ //Check which was selected and set as true
+            selected.set(curWheelTupleIndex - 2, true);
         }
         else{
-            selected.set(curWheelIndex - 1, true);
+            selected.set(curWheelTupleIndex - 1, true);
         }
 
         if(curWheelIndex < wheelList.size()){
@@ -229,11 +287,21 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
             fragmentManager.executePendingTransactions();
 
             Intent intent = new Intent(TaskActivity.this, WheelListActivity.class);
-            for(int i = 0; i < wheelList.size(); i++){
+            for(int i = 0; i < selected.size(); i++){ //Check which ones were selected and mark accordingly... should've just marked accordingly when we switched screens...
                 if(selected.get(i)){
-                    Wheel tmp = wheelList.get(i);
-                    tmp.setChosen(true);
-                    wheelList.set(i, tmp);
+                    Wheel tmp;
+                    WheelTuple tmpTuple = wheelList.get(i / 2);
+                    if( i % 2 == 0){ // looking at left
+                        tmp = wheelList.get(i / 2).left;
+                        tmp.setChosen(true);
+                        tmpTuple.left = tmp;
+                    }
+                    else{ //looking at right
+                        tmp = wheelList.get(i / 2).right;
+                        tmp.setChosen(true);
+                        tmpTuple.right = tmp;
+                    }
+                    wheelList.set(i / 2, tmpTuple);
                 }
             }
             intent.putParcelableArrayListExtra("WHEELLIST", wheelList);
@@ -281,6 +349,7 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
                             logEventTask("Cancelled without choice", "Task not resolved", "-");
                         }
                     })
+                    .setCancelable(false)
                     .show();
         } else {
             //LOG: log confirmation screen click
@@ -307,6 +376,7 @@ public class TaskActivity extends AbstractTaskActivity implements TaskFragment.O
                             logEventTask("Cancelled with choice", "Task resolution", "-");
                         }
                     })
+                    .setCancelable(false)
                     .show();
         }
     }

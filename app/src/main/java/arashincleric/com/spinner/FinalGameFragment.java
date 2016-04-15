@@ -1,34 +1,18 @@
 package arashincleric.com.spinner;
 
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
-
-import org.w3c.dom.Text;
 
 import java.util.Random;
 
 
 public class FinalGameFragment extends TaskFragment {
 
-    public static FinalGameFragment newInstance(int gameNum) {
+    public static FinalGameFragment newInstance() {
         FinalGameFragment fragment = new FinalGameFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -58,10 +42,10 @@ public class FinalGameFragment extends TaskFragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        super.leftSelectBtn.setVisibility(View.GONE);
+        super.leftSelectBtn.setVisibility(View.GONE); //Hide checkboxes
         super.rightSelectBtn.setVisibility(View.GONE);
 
-        super.confirmBtn.setEnabled(false);
+        super.confirmBtn.setEnabled(false); //Disable confirm
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +53,7 @@ public class FinalGameFragment extends TaskFragment {
             }
         });
 
-        int id = getContext().getResources().getIdentifier("GREY", "color", getContext().getPackageName());
+        int id = getContext().getResources().getIdentifier("GREY", "color", getContext().getPackageName()); //Retriever grey color
         int colorId =getContext().getResources().getColor(id);
 
         TextView leftCheckBoxInst = (TextView)view.findViewById(R.id.checkBoxInstLeft);
@@ -77,7 +61,7 @@ public class FinalGameFragment extends TaskFragment {
         TextView rightCheckBoxInst = (TextView)view.findViewById(R.id.checkBoxInstRight);
         rightCheckBoxInst.setVisibility(View.GONE);
 
-        if(super.wLeft.getWheelObject().isChosen()){
+        if(super.wLeft.getWheelObject().isChosen()){ //Hide stuff on the right and grey out spinner
             super.rightScoreView.setVisibility(View.GONE);
             super.rightSpinBtn.setVisibility(View.GONE);
             super.rightWheel.setEnabled(false);
@@ -87,19 +71,19 @@ public class FinalGameFragment extends TaskFragment {
             super.leftSpinBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (allowRotatingLeft) {
+                    if (allowRotatingLeft) { //Log spin
                         //LOG: log left click
                         mListener.logEventTask("Chosen Game", "Spun spinner", "-");
                         Random random = new Random();
                         int seed = random.nextInt(2000);
                         startTheSpinWithDirection("normal", 10000 + seed, true);
                     }
-                    deactivateSpin(true);
+                    deactivateSpin(true); //Only spin once
 
                 }
             });
         }
-        else{
+        else{ //Hide stuff on the left and grey out spinner
             super.leftScoreView.setVisibility(View.GONE);
             super.leftSpinBtn.setVisibility(View.GONE);
             super.leftWheel.setEnabled(false);
@@ -122,7 +106,7 @@ public class FinalGameFragment extends TaskFragment {
         }
     }
 
-    //Not needed but put here just in case...
+    //Not needed but put here just in case... to let the user only spin the spinner once
     public void deactivateSpin(boolean isLeft){
 
         if(isLeft){

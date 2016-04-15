@@ -45,27 +45,16 @@ public class WheelListActivity extends ListActivity {
 
     Button chooseRanBtn;
 
-    public class WheelTuple{
-        public Wheel left;
-        public Wheel right;
-        public WheelTuple(Wheel left, Wheel right){
-            this.left = left;
-            this.right = right;
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        ArrayList<Wheel> tempList = getIntent().getParcelableArrayListExtra("WHEELLIST");
+        ArrayList<WheelTuple> tempList = getIntent().getParcelableArrayListExtra("WHEELLIST");
         wheelArrayList = new ArrayList<WheelTuple>();
-        for(int i = 0; i < tempList.size(); i = i + 2){
-            Wheel tmpLeft = tempList.get(i);
-            Wheel tmpRight = tempList.get(i + 1);
-            wheelArrayList.add(new WheelTuple(tmpLeft, tmpRight));
+        for(int i = 0; i < tempList.size(); i++){
+            wheelArrayList.add(tempList.get(i));
         }
 
         adapter = new WheelListAdapter(this, wheelArrayList);
@@ -95,6 +84,7 @@ public class WheelListActivity extends ListActivity {
                                 startFinalScreen(gameSelection);
                             }
                         })
+                        .setCancelable(false)
                         .show();
             }
         });
@@ -276,18 +266,5 @@ public class WheelListActivity extends ListActivity {
                 finish();
             }
         }
-
-//        //Create user logs
-//        userLogFile = new File(filePath, userLogFileName);
-//        if(!userLogFile.exists()){
-//            try{
-//                FileOutputStream userLogFileStream = new FileOutputStream(userLogFile);
-//                userLogFileStream.write(USER_DATA_COLUMNS.getBytes());
-//                userLogFileStream.close();
-//            } catch(Exception e){
-//                Toast.makeText(this, "Error creating user file. Exiting...", Toast.LENGTH_LONG).show();
-//                finish();
-//            }
-//        }
     }
 }

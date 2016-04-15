@@ -171,6 +171,7 @@ public class SinglePracticeFragment extends Fragment {
                                 mListener.logEventSingle("Canceled continue", "Practice single resolution", "-");
                             }
                         })
+                        .setCancelable(false)
                         .show();
             }
         });

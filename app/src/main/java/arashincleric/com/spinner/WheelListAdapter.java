@@ -21,12 +21,12 @@ import java.util.ArrayList;
  */
 public class WheelListAdapter  extends BaseAdapter implements ListAdapter{
 
-    private ArrayList<WheelListActivity.WheelTuple> list = new ArrayList<WheelListActivity.WheelTuple>();
+    private ArrayList<WheelTuple> list = new ArrayList<WheelTuple>();
     private Context context;
 
     private ViewHolder viewHolder;
 
-    public WheelListAdapter(Context context, ArrayList<WheelListActivity.WheelTuple> list){
+    public WheelListAdapter(Context context, ArrayList<WheelTuple> list){
         this.context = context;
         this.list = list;
     }
@@ -50,11 +50,11 @@ public class WheelListAdapter  extends BaseAdapter implements ListAdapter{
     public View getView(final int position, View convertView, ViewGroup parent){
         View view = convertView;
         if(view == null){ //If view not inflated, inflate it
-            viewHolder = new ViewHolder();
+            viewHolder = new ViewHolder(); // use this to save the spinners as we scroll
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.wheel_list_item, null);
 
-            viewHolder.decisionNum = (TextView)view.findViewById(R.id.decisionNumText);
+            viewHolder.decisionNum = (TextView)view.findViewById(R.id.decisionNumText); //initialize view here
             viewHolder.leftWheel = (ImageView)view.findViewById(R.id.leftWheel);
             viewHolder.rightWheel = (ImageView)view.findViewById(R.id.rightWheel);
             viewHolder.leftCheckBox = (CheckBox)view.findViewById(R.id.leftCheckBox);
@@ -63,7 +63,7 @@ public class WheelListAdapter  extends BaseAdapter implements ListAdapter{
             view.setTag(viewHolder);
         }
         else{
-            viewHolder = (ViewHolder)view.getTag();
+            viewHolder = (ViewHolder)view.getTag(); //If already initialized, get it via tag
         }
 
         viewHolder.decisionNum.setText(Integer.toString(position + 1));
@@ -77,7 +77,7 @@ public class WheelListAdapter  extends BaseAdapter implements ListAdapter{
         int id = context.getResources().getIdentifier("GREY", "color", context.getPackageName());
         int colorId=context.getResources().getColor(id);
 
-        if(!viewHolder.wheelTuple.left.isChosen()){
+        if(!viewHolder.wheelTuple.left.isChosen()){ //Grey wheel accordingly
             viewHolder.leftWheel.setColorFilter(colorId, PorterDuff.Mode.MULTIPLY); //TODO:TWEAK THIS TO DIM(Multiply)
             viewHolder.rightCheckBox.setChecked(true);
         }
@@ -110,7 +110,7 @@ public class WheelListAdapter  extends BaseAdapter implements ListAdapter{
         ImageView rightWheel;
         CheckBox leftCheckBox;
         CheckBox rightCheckBox;
-        WheelListActivity.WheelTuple wheelTuple;
+        WheelTuple wheelTuple;
     }
 
     @Override

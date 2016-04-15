@@ -90,6 +90,7 @@ public class MainActivity extends AbstractTaskActivity {
                     new AlertDialog.Builder(v.getContext())
                             .setMessage(error)
                             .setNeutralButton(R.string.close_alert_btn, null)
+                            .setCancelable(false)
                             .show();
                 }
             }

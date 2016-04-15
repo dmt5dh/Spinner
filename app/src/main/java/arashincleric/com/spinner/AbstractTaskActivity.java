@@ -1,6 +1,5 @@
 package arashincleric.com.spinner;
 
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -211,6 +210,11 @@ public abstract class AbstractTaskActivity extends FragmentActivity {
         writeToFile(eventLogFile, dataToSave);
     }
 
+    /**
+     * Initialize a wheel list given json
+     * @param isPractice boolean flag if this is for practice
+     * @return ArrayList of Wheel objects
+     */
     public ArrayList<Wheel> initializeWheelList(boolean isPractice){
         //Read wheel data from JSON
         InputStream is;
@@ -237,7 +241,7 @@ public abstract class AbstractTaskActivity extends FragmentActivity {
         ArrayList<Wheel> wheelList = new ArrayList<Wheel>();
         String json = writer.toString();
         try{
-            JSONArray jsonArray = new JSONArray(json);
+            JSONArray jsonArray = new JSONArray(json); //Get the JSON object and extra data
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject jsonWheel = jsonArray.getJSONObject(i).getJSONObject("spinner");
                 JSONArray sectionsJsonArray = jsonWheel.getJSONArray("sections");
@@ -247,7 +251,7 @@ public abstract class AbstractTaskActivity extends FragmentActivity {
                 float[] sectionsArray = new float[sectionsJsonArray.length()];
                 int[] priceArray = new int[sectionsJsonArray.length()];
                 String[] colorArray = new String[sectionsJsonArray.length()];
-                for(int j = 0; j < sectionsJsonArray.length(); j++){
+                for(int j = 0; j < sectionsJsonArray.length(); j++){ //We can simultaneously get information
                     sectionsArray[j] = (float)((int)sectionsJsonArray.get(j) / 1.0); //To convert int to float
                     priceArray[j] = (int)priceJsonArray.get(j);
                     colorArray[j] = (String)colorJsonList.get(j);
